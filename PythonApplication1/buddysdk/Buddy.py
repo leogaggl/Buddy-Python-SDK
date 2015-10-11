@@ -16,12 +16,12 @@ class Buddy(object):
         pass
 
     @staticmethod
-    def init(app_id, app_key):
+    def init(app_id, app_key, settings = None):
 
         if Buddy._clients.get(app_id) != None:
             client = Buddy._clients.get(app_id)
         else:
-            client = BuddyClient.BuddyClient(app_id, app_key, Settings.Settings(app_id))
+            client = BuddyClient.BuddyClient(app_id, app_key, settings if settings != None else Settings.Settings(app_id))
             Buddy._clients[app_id] = client
 
         Buddy.current_client = client

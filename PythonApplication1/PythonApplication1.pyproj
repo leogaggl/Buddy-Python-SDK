@@ -42,6 +42,12 @@
     <Compile Include="tests\test3.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test4.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\TestBase.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="buddysdk\" />

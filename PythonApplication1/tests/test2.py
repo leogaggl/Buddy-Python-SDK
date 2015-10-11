@@ -1,7 +1,8 @@
 ﻿import unittest
+import TestBase
 from buddysdk import Buddy
 
-class test_test2(unittest.TestCase):
+class test_test2(TestBase.TestBase):
     def test_Buddy_init(self):
         client_a = Buddy.Buddy.init("a", "b")
         self.assertEqual(client_a.app_id, "a")

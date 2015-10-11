@@ -1,13 +1,14 @@
 ﻿import datetime
 import easysettings
-
+import re
+import requests
 
 class Settings(object):
 
     _service_root = None
     _device_token = None
     _device_token_expires = None
-    _default_service_root = "https://api.buddyplatform.com/"
+    _default_service_root = "https://api.buddyplatform.com"
 
 
     def __init__(self, app_id):
@@ -15,21 +16,32 @@ class Settings(object):
         self._service_root = self._settings.get("service_root")
         self._device_token = self._settings.get("device_token")
 
-    def get_service_root(self):
-        if self._service_root == None:
+    @property
+    def service_root(self):
+        if self._service_root == "":
             return self._default_service_root
 
         return self._service_root
 
-    def get_access_token(self):
-        if self._device_token != None and self._device_token_expires > datetime.datetime.now():
+    @property
+    def access_token(self):
+        if self._device_token != "" and self._device_token_expires > datetime.datetime.now():
             return self._device_token
         else:
-            return None
+            return ""
 
     def process_device_registration(self, response):
-        self._device_token = response[0]["accessToken"]
-        self._device_token_expires = datetime.datetime.utcfromtimestamp(int(response[0]["accessTokenExpires"])/1000)
-        self._service_root = response[0]["serviceRoot"]
+        self._device_token = response["accessToken"]
+        self._device_token_expires = self.get_ticks(response["accessTokenExpires"])
+        
+        if ("serviceRoot" in response):
+            self._service_root = response["serviceRoot"]
 
         self._settings.save()
+
+    def get_ticks(self, javascript_ticks):
+        match = re.compile("\/Date\((\d+)\)\/").findall(javascript_ticks)[0]
+
+        ticks = datetime.datetime.utcfromtimestamp(int(match)/1000)
+
+        return ticks

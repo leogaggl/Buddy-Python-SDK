@@ -32,7 +32,7 @@ class BuddyClient(object):
 
     def register_device(self):
     
-        response = requests.post(self._settings.get_service_root(), json = {
+        response = requests.post(self._settings.service_root + "/devices", json = {
             "platform" : "Raspberry Pi",
             "model" : "model",
             "osVersion" : "",
@@ -41,5 +41,5 @@ class BuddyClient(object):
             "appkey" : self.app_key
         })
 
-        self._settings.process_device_registration(response.json())
+        self._settings.process_device_registration(response.json()['result'])
 
