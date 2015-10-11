@@ -1,6 +1,6 @@
 ﻿import unittest
-import TestBase
 from buddysdk import Buddy
+import TestBase
 
 class test_test2(TestBase.TestBase):
     def test_Buddy_init(self):
@@ -21,7 +21,6 @@ class test_test2(TestBase.TestBase):
         self.assertEqual(Buddy.Buddy.current_client.app_key, "d")
 
         self.assertEqual(Buddy.Buddy.current_client, client_2)
-
 
 if __name__ == '__main__':
     unittest.main()
