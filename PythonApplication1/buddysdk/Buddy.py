@@ -32,3 +32,9 @@ class Buddy(object):
     def current_client(cls):
         return cls._current_client
 
+    def post(path, dictionary):
+        return Buddy.current_client.post(path, dictionary)
+
+    def put(path, dictionary):
+        return Buddy.current_client.put(path, dictionary)
+
