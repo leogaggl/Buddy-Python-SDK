@@ -1,8 +1,28 @@
 ﻿import daemon
-import buddysdk
+import signal
+
+import Buddy
+
+Buddy.Buddy.init("bbbbbc.xgjbvPdwkllw", "1E9E824E-A3F1-4F34-B4F4-9CC87471A564")
+
+def program_cleanup():
+	pass
+
+def reload_program_config():
+	pass
+
+context = daemon.DaemonContext()
+
+context.signal_map = {
+    signal.SIGTERM: program_cleanup,
+    signal.SIGHUP: 'terminate',
+    signal.SIGUSR1: reload_program_config,
+}
+
+with context:
+    pass
 
 
-buddysdk.Buddy.Buddy.init("", "")
 
 
 var options = {
@@ -20,15 +40,3 @@ Buddy.put('/telemetry/RaspberryPiDaemon',
 
 buddysdk.Buddy.Buddy.put("/telemetry", {
     })
-
-context = daemon.DaemonContext()
-
-context.signal_map = {
-    signal.SIGTERM: program_cleanup,
-    signal.SIGHUP: 'terminate',
-    signal.SIGUSR1: reload_program_config,
-    }  
-
-with context:
-    pass
-  
