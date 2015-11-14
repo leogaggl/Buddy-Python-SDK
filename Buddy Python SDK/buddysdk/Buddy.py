@@ -1,5 +1,5 @@
-﻿import BuddyClient
-import Settings
+﻿from BuddyClient import BuddyClient
+from Settings import Settings
 
 
 class BuddyProperties(type):
@@ -37,7 +37,7 @@ class Buddy(object, metaclass = BuddyProperties):
     def init(app_id, app_key, settings = None):
 
         if Buddy._clients.get(app_id) is None:
-            client = BuddyClient.BuddyClient(app_id, app_key, settings if settings != None else Settings.Settings(app_id))
+            client = BuddyClient(app_id, app_key, settings if settings != None else Settings(app_id))
             Buddy._clients[app_id] = client
         else:
             client = Buddy._clients.get(app_id)

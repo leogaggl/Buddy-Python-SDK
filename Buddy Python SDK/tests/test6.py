@@ -2,23 +2,28 @@ import unittest
 import logging
 import time
 
-import Buddy
-import TestBase
+from Buddy import Buddy
+from TestBase import TestBase
 from Connection import Connection
 
 
-class Test_test6(TestBase.TestBase):
+class Test_test6(TestBase):
     def test_connection(self):
-        Buddy.Buddy.init(TestBase.TestBase.US_app_id, TestBase.TestBase.US_app_key)
+        Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 
         logger = connection_logger();
 
-        Buddy.Buddy.connection_changed.on_change += logger.log
+        Buddy.connection_changed.on_change += logger.log
 
-        Buddy.Buddy.post("/metrics/events/key", {})
+        Buddy.post("/metrics/events/key", {})
 
         while logger.connection is not Connection.On:
             time.sleep(2)
+
+    def test_bad_device_token(self):
+        Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
+
+        Buddy.post("/metrics/events/key", {})
 
 
 class connection_logger(object):

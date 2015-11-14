@@ -1,11 +1,11 @@
 ﻿import datetime
 import unittest
 
-import Settings
-import TestBase
+from Settings import Settings
+from TestBase import TestBase
 
 
-class Test_test3(TestBase.TestBase):
+class Test_test3(TestBase):
    
     _app_id = "a"
     _default_service_root = "https://api.buddyplatform.com"
@@ -13,12 +13,12 @@ class Test_test3(TestBase.TestBase):
     _access_token = "at"
 
     def test_Settings_empty(self):
-        settings = Settings.Settings(Test_test3._app_id)
+        settings = Settings(Test_test3._app_id)
         self.assertEqual(settings.access_token, "")
         self.assertEqual(settings.service_root, Test_test3._default_service_root)
     
     def test_Settings_access_token(self):
-        settings = Settings.Settings(Test_test3._app_id)
+        settings = Settings(Test_test3._app_id)
 
         now = datetime.datetime.now(datetime.timezone.utc)
         future = now + datetime.timedelta(1)
@@ -27,7 +27,7 @@ class Test_test3(TestBase.TestBase):
         self.assertEqual(settings.access_token, Test_test3._access_token)
 
     def test_Settings_access_token_expired(self):
-        settings = Settings.Settings(Test_test3._app_id)
+        settings = Settings(Test_test3._app_id)
 
         now = datetime.datetime.now(datetime.timezone.utc)
         past = now - datetime.timedelta(1)
@@ -40,7 +40,7 @@ class Test_test3(TestBase.TestBase):
         # pre-load Settings with a different test
         self.test_Settings_access_token()
 
-        settings = Settings.Settings(Test_test3._app_id)
+        settings = Settings(Test_test3._app_id)
 
         self.assertEqual(settings.access_token, Test_test3._access_token)
         self.assertEqual(settings.service_root, Test_test3._service_root)
