@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/BuddyRaspberryPiDaemon" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Buddy Python SDK/tests" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.4.3 (/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4) (1)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

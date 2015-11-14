@@ -2,39 +2,73 @@
 import Settings
 
 
-class classproperty(property):
-    def __get__(self, cls, owner):
-        return classmethod(self.fget).__get__(None, owner)()
+class BuddyProperties(type):
+    @property
+    def current_client(cls):
+        return Buddy._current_client
+
+    @property
+    def last_location(cls):
+        return Buddy.current_client.last_location
+
+    @last_location.setter
+    def last_location(cls, value):
+    		Buddy.current_client.last_location = value
+
+    @property
+    def on_service_exception(cls):
+        return Buddy.current_client.service_exception
+
+    @property
+    def authentication_changed(cls):
+        return Buddy.current_client.authentication_changed
+
+    @property
+    def connectivity_changed(cls):
+        return Buddy.current_client.connectivity_changed
 
 
-class Buddy(object):
+class Buddy(object, metaclass = BuddyProperties):
 
     _clients = {}
     _current_client = None
 
-    def __init__(self):
-        pass
+    #def __init__(self):
+     #   pass
 
     @staticmethod
     def init(app_id, app_key, settings = None):
 
-        if Buddy._clients.get(app_id) == None:
+        if Buddy._clients.get(app_id) is None:
             client = BuddyClient.BuddyClient(app_id, app_key, settings if settings != None else Settings.Settings(app_id))
             Buddy._clients[app_id] = client
         else:
             client = Buddy._clients.get(app_id)
 
-        Buddy.current_client = client
+        Buddy._current_client = client
 
         return Buddy.current_client
 
-    @classproperty
-    def current_client(cls):
-        return cls._current_client
-
+    @staticmethod
     def post(path, dictionary):
         return Buddy.current_client.post(path, dictionary)
 
+    @staticmethod
     def put(path, dictionary):
         return Buddy.current_client.put(path, dictionary)
 
+    @staticmethod
+    def create_user(dictionary):
+       return Buddy.current_client.create_user(dictionary)
+
+    @staticmethod
+    def login_user(dictionary):
+       return Buddy.current_client.login_user(dictionary)
+
+    @staticmethod
+    def logout_user(dictionary):
+       return Buddy.current_client.logout_user(dictionary)
+
+    @staticmethod
+    def get_current_user(self):
+        return Buddy.current_client.get_current_user()
