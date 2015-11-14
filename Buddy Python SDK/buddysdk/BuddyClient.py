@@ -2,7 +2,7 @@
 import requests
 import events
 import threading
-import Connection
+from Connection import Connection
 
 
 class BuddyClient(object):
@@ -17,9 +17,9 @@ class BuddyClient(object):
 
         self._service_exception = events.Events()
         self._authentication_changed = events.Events()
-        self._connectivity_changed = events.Events()
-        self._connectivity_retry = threading.Thread(target = self.__connectivity_retry)
-        self._connectivity_level = Connection.Connection.Connection
+        self._connection_changed = events.Events()
+        self._connection_retry = threading.Thread(target = self.__connection_retry)
+        self._connection_level = Connection.On
 
     @property
     def app_id(self):
@@ -46,8 +46,8 @@ class BuddyClient(object):
         return self._authentication_changed
 
     @property
-    def connectivity_changed(self):
-        return self._connectivity_changed
+    def connection_changed(self):
+        return self._connection_changed
 
     def register_device(self):
         response = self.__handle_request(requests.post, "/devices", {
@@ -104,44 +104,44 @@ class BuddyClient(object):
         return self.__handle_response(response)
 
     def __handle_response(self, response):
-        if response is not None:
-            return response.json()['result']
-        else:
+        if response is None:
             return None
+        else:
+            return response.json()['result']
 
     def __handle_http_exception(self, exception):
         pass
 
     def __handle_connection_exception(self, exception):
-        self.__set_connectivity_level(Connection.Connection.NoConnection)
+        self.__set_connection_level(Connection.Off)
 
-        if not self._connectivity_retry.isAlive():
-            self._connectivity_retry.start()
+        if not self._connection_retry.isAlive():
+            self._connection_retry.start()
 
-    def __connectivity_retry(self):
-        success = False
+    def __connection_retry(self):
+        successful = False
 
-        while not success:
+        while not successful:
             try:
                 response = requests.post(self._settings.service_root + "/service/ping")
-                success = True
+                successful = True
             except requests.exceptions.RequestException:
-                success = False
+                successful = False
             except requests.exceptions.ConnectionError:
-                success = False
+                successful = False
             except requests.exceptions.HTTPError:
-                success = False
+                successful = False
             except requests.exceptions.URLRequired:
-                success = False
+                successful = False
             except requests.exceptions.Timeout:
-                success = False
+                successful = False
 
-        self.__set_connectivity_level(Connection.Connection.Connection)
+        self.__set_connection_level(Connection.On)
 
-    def __set_connectivity_level(self, connectivity_level):
-        if self._connectivity_level != connectivity_level:
-            self._connectivity_level = connectivity_level
-            self._connectivity_changed.on_change(self._connectivity_level)
+    def __set_connection_level(self, connection_level):
+        if self._connection_level != connection_level:
+            self._connection_level = connection_level
+            self._connection_changed.on_change(self._connection_level)
 
 
 class Auth(requests.auth.AuthBase):

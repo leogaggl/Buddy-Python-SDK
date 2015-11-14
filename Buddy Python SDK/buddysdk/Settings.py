@@ -41,7 +41,7 @@ class Settings(object):
         self._settings.set(Settings._device_token, response["accessToken"])
         self._settings.set(Settings._device_token_expires, self.ticks_from_javascript_datetime(response["accessTokenExpires"]))
         
-        if ("serviceRoot" in response):
+        if "serviceRoot" in response:
             self._settings.set(Settings._service_root, response["serviceRoot"])
 
         self._settings.save()

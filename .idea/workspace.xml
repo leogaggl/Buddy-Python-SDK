@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5f760ad-144d-4a48-82e1-7ff036070725" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Connection.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Buddy Python SDK/buddy.conf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Buddy Python SDK/tests/buddy.conf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Buddy Python SDK/tests/test6.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Buddy Python.iml" afterPath="$PROJECT_DIR$/.idea/Buddy Python.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Buddy.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Buddy.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/BuddyClient.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/BuddyClient.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BuddyRaspberryPiDaemon/BuddyRaspberryPiDaemon.py" afterPath="$PROJECT_DIR$/BuddyRaspberryPiDaemon/BuddyRaspberryPiDaemon.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Connection.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Connection.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Settings.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/tests/test6.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/tests/test6.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Buddy Python.iws" />
@@ -26,7 +22,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Buddy Python$Unittests_in_Test_test5.coverage" NAME="Unittests in Test_test5 Coverage Results" MODIFIED="1447466179172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Buddy Python SDK/tests" />
-    <SUITE FILE_PATH="coverage/Buddy Python$Tests.coverage" NAME="Tests Coverage Results" MODIFIED="1447466443689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Buddy Python$Tests.coverage" NAME="Tests Coverage Results" MODIFIED="1447472395171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Buddy Python$Unittests_in_Test_test6__1_.coverage" NAME="Unittests in Test_test6 (1) Coverage Results" MODIFIED="1447466198201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Buddy Python SDK/tests" />
     <SUITE FILE_PATH="coverage/Buddy Python$Unittest_Test_test6_test_connectivity.coverage" NAME="Unittest Test_test6.test_connectivity Coverage Results" MODIFIED="1447466436701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Buddy Python SDK/tests" />
     <SUITE FILE_PATH="coverage/Buddy Python$Unittests_in_Test_test6.coverage" NAME="Unittests in Test_test6 Coverage Results" MODIFIED="1447464357882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Buddy Python SDK/tests" />
@@ -51,11 +47,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="test6.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test6.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test6.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="109" selection-start-line="25" selection-start-column="109" selection-end-line="25" selection-end-column="109" />
+            <state vertical-scroll-proportion="0.29372197">
+              <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -68,16 +64,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-              <folding />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BuddyClient.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BuddyClient.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/BuddyClient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.112469435">
-              <caret line="100" column="49" selection-start-line="100" selection-start-column="49" selection-end-line="100" selection-end-column="49" />
+            <state vertical-scroll-proportion="50.592594">
+              <caret line="48" column="18" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="18" />
               <folding>
                 <element signature="e#22#37#0" expanded="true" />
               </folding>
@@ -89,7 +87,7 @@
         <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/Settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+              <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -99,7 +97,7 @@
         <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/Buddy.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -122,7 +120,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Settings.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/TestBase.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test1.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test2.py" />
@@ -132,8 +129,9 @@
         <option value="$PROJECT_DIR$/BuddyRaspberryPiDaemon/BuddyRaspberryPiDaemon.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/EventHook.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Connection.py" />
-        <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Buddy.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/BuddyClient.py" />
+        <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Buddy.py" />
+        <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Settings.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test6.py" />
       </list>
     </option>
@@ -306,7 +304,7 @@
       </console-settings>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittest Test_test4.test_register_device_eu">
+  <component name="RunManager" selected="Python tests.Tests">
     <configuration default="false" name="Unittest Test_test5.test_put_metrics" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -712,13 +710,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847682" sideWeight="0.49499285" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38543046" sideWeight="0.49499285" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42119205" sideWeight="0.49499285" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42119205" sideWeight="0.49499285" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34304637" sideWeight="0.50500715" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -728,7 +726,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2553648" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.62119204" sideWeight="0.7174535" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37218544" sideWeight="0.49499285" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37218544" sideWeight="0.49499285" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -968,14 +966,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/Connection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/unittest/case.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1000,14 +990,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test5.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/requests/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.30493274">
@@ -1016,10 +998,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/Settings.py">
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test5.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/Connection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18337408">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1027,29 +1019,37 @@
     <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/Buddy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test6.py">
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/Settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="109" selection-start-line="25" selection-start-column="109" selection-end-line="25" selection-end-column="109" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+          <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/BuddyClient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.112469435">
-          <caret line="100" column="49" selection-start-line="100" selection-start-column="49" selection-end-line="100" selection-end-column="49" />
+        <state vertical-scroll-proportion="50.592594">
+          <caret line="48" column="18" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="18" />
           <folding>
             <element signature="e#22#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29372197">
+          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>

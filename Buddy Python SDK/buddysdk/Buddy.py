@@ -24,17 +24,14 @@ class BuddyProperties(type):
         return Buddy.current_client.authentication_changed
 
     @property
-    def connectivity_changed(cls):
-        return Buddy.current_client.connectivity_changed
+    def connection_changed(cls):
+        return Buddy.current_client.connection_changed
 
 
 class Buddy(object, metaclass = BuddyProperties):
 
     _clients = {}
     _current_client = None
-
-    #def __init__(self):
-     #   pass
 
     @staticmethod
     def init(app_id, app_key, settings = None):

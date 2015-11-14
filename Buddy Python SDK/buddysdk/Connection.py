@@ -2,5 +2,5 @@ from enum import Enum
 
 
 class Connection(Enum):
-    NoConnection = 0
-    Connection = 1
+    Off = 0
+    On = 1
