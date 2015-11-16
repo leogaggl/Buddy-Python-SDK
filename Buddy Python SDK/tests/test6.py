@@ -1,17 +1,22 @@
 import unittest
 import logging
 import time
+from easysettings import EasySettings
 
-from Buddy import Buddy
-from TestBase import TestBase
-from Connection import Connection
+
+from buddy import Buddy
+from connection import Connection
+from test_base import TestBase
+from settings import Settings
+from access_token import AccessToken
 
 
 class Test_test6(TestBase):
+
     def test_connection(self):
         Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 
-        logger = connection_logger();
+        logger = ConnectionLogger();
 
         Buddy.connection_changed.on_change += logger.log
 
@@ -21,12 +26,24 @@ class Test_test6(TestBase):
             time.sleep(2)
 
     def test_bad_device_token(self):
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
+        settings = Settings(TestBase.US_app_id)
+        settings._settings.set(Settings._device_token, ["bad device token", ""])
+
+        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, settings)
+
+        Buddy.post("/metrics/events/key", {})
+
+    def test_device_token_expired(self):
+        settings = Settings(TestBase.US_app_id)
+        settings._settings.set(Settings._device_token, ["eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIyMDE1LTExLTExVDAzOjM0OjU4LjE2Mjg2NzlaIiwibCI6ImJiYmJ2LnJwZGJ2eGJnR3JNZyIsImEiOiJiYmJiYmMueGdqYnZQZHdrbGx3IiwidSI6bnVsbCwiZCI6ImJsai5sRHBGd0tNc2dGRk0ifQ.l4ob5liSYfgI25mnysjRHpgCYr1yCzayC4XjHJOv4v0",
+                                                        ""])
+
+        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, settings)
 
         Buddy.post("/metrics/events/key", {})
 
 
-class connection_logger(object):
+class ConnectionLogger(object):
     def __init__(self):
         self.connection = Connection.On # switch to None when debugging w\ no connection
 

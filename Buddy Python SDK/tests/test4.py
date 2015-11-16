@@ -1,8 +1,8 @@
 ﻿import unittest
 
-from Buddy import Buddy
-from Settings import Settings
-from TestBase import TestBase
+from buddy import Buddy
+from settings import Settings
+from test_base import TestBase
 
 
 class Test_test4(TestBase):
@@ -22,9 +22,9 @@ class TestHelper(object):
         settings = Settings(app_id)
         client = Buddy.init(app_id, app_key, settings)
 
-        client.register_device()
+        client.get_access_token_string()
 
-        test.assertIsNotNone(settings.access_token)
+        test.assertIsNotNone(settings.access_token_string)
         test.assertTrue(settings.service_root.startswith(service_root_starts_with))
 
 

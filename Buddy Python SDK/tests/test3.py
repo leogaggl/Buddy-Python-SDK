@@ -1,9 +1,12 @@
-﻿import datetime
+﻿from datetime import datetime
+from datetime import timezone
+from datetime import timedelta
 import unittest
 
-from Settings import Settings
-from TestBase import TestBase
-
+from settings import Settings
+from test_base import TestBase
+from easysettings import EasySettings
+from access_token import AccessToken
 
 class Test_test3(TestBase):
    
@@ -14,26 +17,52 @@ class Test_test3(TestBase):
 
     def test_Settings_empty(self):
         settings = Settings(Test_test3._app_id)
-        self.assertEqual(settings.access_token, "")
+        at = settings.access_token_string;
+        self.assertEqual(at, None)
         self.assertEqual(settings.service_root, Test_test3._default_service_root)
-    
+
+    def test_access_token(self):
+        future = datetime.now(timezone.utc) + timedelta(1)
+        at = self.access_token_base(future)
+        self.assertEqual(at.token, Test_test3._access_token)
+
+    def test_access_token_expired(self):
+        past = datetime.now(timezone.utc) - timedelta(1)
+        at = self.access_token_base(past)
+        self.assertEqual(at.token, None)
+
+    def access_token_base(self, time):
+        es = EasySettings("buddy.conf", TestBase.US_app_id)
+        es.set(Settings._device_token, [Test_test3._access_token, str(self.ticks_from_timestamp(time.timestamp()))])
+        result = es.get(Settings._device_token)
+        at = AccessToken(result)
+        return at
+
     def test_Settings_access_token(self):
         settings = Settings(Test_test3._app_id)
 
-        now = datetime.datetime.now(datetime.timezone.utc)
-        future = now + datetime.timedelta(1)
-        json = {"accessToken": Test_test3._access_token, "accessTokenExpires": self.javascript_datetime_from_datetime(future), "serviceRoot": Test_test3._service_root}
-        settings.process_device_registration(json)
-        self.assertEqual(settings.access_token, Test_test3._access_token)
+        future = datetime.now(timezone.utc) + timedelta(1)
+
+        json = {"accessToken": Test_test3._access_token,
+                "accessTokenExpires": self.javascript_datetime_from_datetime(future),
+                "serviceRoot": Test_test3._service_root}
+
+        settings.set_device_token(json)
+
+        self.assertEqual(settings.access_token_string, Test_test3._access_token)
 
     def test_Settings_access_token_expired(self):
         settings = Settings(Test_test3._app_id)
 
-        now = datetime.datetime.now(datetime.timezone.utc)
-        past = now - datetime.timedelta(1)
-        json = {"accessToken": Test_test3._access_token, "accessTokenExpires": self.javascript_datetime_from_datetime(past), "serviceRoot": Test_test3._service_root}
-        settings.process_device_registration(json)
-        self.assertEqual(settings.access_token, "")
+        past = datetime.now(timezone.utc) - timedelta(1)
+
+        json = {"accessToken": Test_test3._access_token,
+                "accessTokenExpires": self.javascript_datetime_from_datetime(past),
+                "serviceRoot": Test_test3._service_root}
+
+        settings.set_device_token(json)
+
+        self.assertEqual(settings.access_token_string, None)
 
     def test_Settings_save_load(self):
 
@@ -42,7 +71,7 @@ class Test_test3(TestBase):
 
         settings = Settings(Test_test3._app_id)
 
-        self.assertEqual(settings.access_token, Test_test3._access_token)
+        self.assertEqual(settings.access_token_string, Test_test3._access_token)
         self.assertEqual(settings.service_root, Test_test3._service_root)
 
 if __name__ == '__main__':

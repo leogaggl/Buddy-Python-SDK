@@ -1,8 +1,7 @@
-﻿#import python-hwinfo
+﻿from connection import Connection
+from events import Events
 import requests
-import events
-import threading
-from Connection import Connection
+from threading import Thread
 
 
 class BuddyClient(object):
@@ -15,10 +14,10 @@ class BuddyClient(object):
         self._session.auth = Auth(self, self._settings)
         self._last_location = None
 
-        self._service_exception = events.Events()
-        self._authentication_changed = events.Events()
-        self._connection_changed = events.Events()
-        self._connection_retry = threading.Thread(target = self.__connection_retry)
+        self._service_exception = Events()
+        self._authentication_changed = Events()
+        self._connection_changed = Events()
+        self._connection_retry = Thread(target = self.__connection_retry)
         self._connection_level = Connection.On
 
     @property
@@ -49,7 +48,13 @@ class BuddyClient(object):
     def connection_changed(self):
         return self._connection_changed
 
-    def register_device(self):
+    def get_access_token_string(self):
+        if self._settings.access_token_string is None:
+            self.__register_device()
+
+        return self._settings.access_token_string
+
+    def __register_device(self):
         response = self.__handle_request(requests.post, "/devices", {
             "platform" : "Raspberry Pi",
             "model" : self.__get_model(),
@@ -59,14 +64,14 @@ class BuddyClient(object):
             "appkey" : self.app_key
         })
 
-        self._settings.process_device_registration(response)
+        self._settings.set_device_token(response)
 
     def __get_serial(self):
         cpuserial = "0000000000000000"
         try:
-            f = open('/proc/cpuinfo', 'r')
+            f = open("/proc/cpuinfo", 'r')
             for line in f:
-                if line[0:6] == 'Serial':
+                if line[0:6] == "Serial":
                     cpuserial = line[10:26]
             f.close()
         except:
@@ -107,7 +112,12 @@ class BuddyClient(object):
         if response is None:
             return None
         else:
-            return response.json()['result']
+            #if response.status_code is 401 or response.status_code is 403
+            json = response.json()
+            if "result" in json:
+                return json["result"]
+            else:
+                return None
 
     def __handle_http_exception(self, exception):
         pass
@@ -139,7 +149,7 @@ class BuddyClient(object):
         self.__set_connection_level(Connection.On)
 
     def __set_connection_level(self, connection_level):
-        if self._connection_level != connection_level:
+        if self._connection_level is not connection_level:
             self._connection_level = connection_level
             self._connection_changed.on_change(self._connection_level)
 
@@ -151,11 +161,10 @@ class Auth(requests.auth.AuthBase):
         self._settings = settings
 
     def __call__(self, request):
-        if self._settings.access_token == "":
-            self._client.register_device()
-            #pass
-
         #request.headers["Authorization"] = "Buddy eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIyMDE1LTExLTExVDAzOjM0OjU4LjE2Mjg2NzlaIiwibCI6ImJiYmJ2LnJwZGJ2eGJnR3JNZyIsImEiOiJiYmJiYmMueGdqYnZQZHdrbGx3IiwidSI6bnVsbCwiZCI6ImJsai5sRHBGd0tNc2dGRk0ifQ.l4ob5liSYfgI25mnysjRHpgCYr1yCzayC4XjHJOv4v0"
-        request.headers["Authorization"] = "Buddy " + self._settings.access_token
+        access_token = self._client.get_access_token_string()
+
+        if access_token is not None:
+            request.headers["Authorization"] = "Buddy " + access_token
 
         return request

@@ -1,8 +1,8 @@
 ﻿import unittest
 
-from BuddyClient import BuddyClient
-from Settings import Settings
-from TestBase import TestBase
+from buddy_client import BuddyClient
+from settings import Settings
+from test_base import TestBase
 
 
 class test_test1(TestBase):

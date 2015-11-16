@@ -1,5 +1,5 @@
-﻿from BuddyClient import BuddyClient
-from Settings import Settings
+﻿from buddy_client import BuddyClient
+from settings import Settings
 
 
 class BuddyProperties(type):
@@ -16,7 +16,7 @@ class BuddyProperties(type):
     		Buddy.current_client.last_location = value
 
     @property
-    def on_service_exception(cls):
+    def service_exception(cls):
         return Buddy.current_client.service_exception
 
     @property
@@ -36,8 +36,10 @@ class Buddy(object, metaclass = BuddyProperties):
     @staticmethod
     def init(app_id, app_key, settings = None):
 
+        settings = settings if settings is not None else Settings(app_id)
+
         if Buddy._clients.get(app_id) is None:
-            client = BuddyClient(app_id, app_key, settings if settings != None else Settings(app_id))
+            client = BuddyClient(app_id, app_key, settings)
             Buddy._clients[app_id] = client
         else:
             client = Buddy._clients.get(app_id)

@@ -1,7 +1,7 @@
 ﻿import unittest
 
-from Buddy import Buddy
-from TestBase import TestBase
+from buddy import Buddy
+from test_base import TestBase
 
 
 class test_test2(TestBase):
