@@ -1,4 +1,7 @@
-﻿from easysettings import EasySettings
+﻿from datetime import datetime
+from datetime import timezone
+from datetime import timedelta
+from easysettings import EasySettings
 from unittest import TestCase
 
 
@@ -14,8 +17,18 @@ class TestBase(TestCase):
         es.clear()
         es.save()
 
-    def javascript_datetime_from_datetime(self, datetime):
-        return "/Date(" + str(round(self.ticks_from_timestamp(datetime.timestamp()))) + ")/"
+    def future_javascript_access_token_expires(self):
+        return self.__javascript_access_token_expires(1)
+
+    def past_javascript_access_token_expires(self):
+        return self.__javascript_access_token_expires(-1)
+
+    def __javascript_access_token_expires(self, days):
+        delta = datetime.now(timezone.utc) + timedelta(days)
+        return self.__javascript_access_token_expires_string(delta)
+
+    def __javascript_access_token_expires_string(self, python_datetime):
+        return "/Date(" + str(round(self.ticks_from_timestamp(python_datetime.timestamp()))) + ")/"
 
     def ticks_from_timestamp(self, timestamp):
         return timestamp * 1000

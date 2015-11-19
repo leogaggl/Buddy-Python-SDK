@@ -27,20 +27,24 @@ class Test_test6(TestBase):
 
     def test_bad_device_token(self):
         settings = Settings(TestBase.US_app_id)
-        settings._settings.set(Settings._device_token, ["bad device token", ""])
+        settings._settings.set(Settings._device_token, ["bad device token", self.future_javascript_access_token_expires()])
 
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, settings)
+        client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key, settings)
 
         Buddy.post("/metrics/events/key", {})
+
+        self.assertIsNotNone(client.get_access_token_string())
 
     def test_device_token_expired(self):
         settings = Settings(TestBase.US_app_id)
         settings._settings.set(Settings._device_token, ["eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIyMDE1LTExLTExVDAzOjM0OjU4LjE2Mjg2NzlaIiwibCI6ImJiYmJ2LnJwZGJ2eGJnR3JNZyIsImEiOiJiYmJiYmMueGdqYnZQZHdrbGx3IiwidSI6bnVsbCwiZCI6ImJsai5sRHBGd0tNc2dGRk0ifQ.l4ob5liSYfgI25mnysjRHpgCYr1yCzayC4XjHJOv4v0",
-                                                        ""])
+                                                        self.past_javascript_access_token_expires()])
 
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, settings)
+        client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key, settings)
 
         Buddy.post("/metrics/events/key", {})
+
+        self.assertIsNotNone(client.get_access_token_string())
 
 
 class ConnectionLogger(object):

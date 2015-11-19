@@ -57,16 +57,16 @@ class Buddy(object, metaclass = BuddyProperties):
         return Buddy.current_client.put(path, dictionary)
 
     @staticmethod
-    def create_user(dictionary):
-       return Buddy.current_client.create_user(dictionary)
+    def create_user(user_name, password, first_name, last_name, email, gender, date_of_birth, tag):
+       return Buddy.current_client.create_user(user_name, password, first_name, last_name, email, gender, date_of_birth, tag)
 
     @staticmethod
-    def login_user(dictionary):
-       return Buddy.current_client.login_user(dictionary)
+    def login_user(user_name, password):
+       return Buddy.current_client.login_user(user_name, password)
 
     @staticmethod
-    def logout_user(dictionary):
-       return Buddy.current_client.logout_user(dictionary)
+    def logout_user():
+       return Buddy.current_client.logout_user()
 
     @staticmethod
     def get_current_user(self):

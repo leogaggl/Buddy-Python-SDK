@@ -1,7 +1,5 @@
-﻿from datetime import datetime
-from easysettings import EasySettings
+﻿from easysettings import EasySettings
 import re
-
 from access_token import AccessToken
 
 
@@ -17,7 +15,7 @@ class Settings(object):
     @property
     def service_root(self):
         service_root = self._settings.get(Settings._service_root)
-        if service_root == "":
+        if service_root is "":
             return Settings._default_service_root
         else:
             return service_root
@@ -45,19 +43,21 @@ class Settings(object):
             self._settings.save()
    
     def __set_access_token(self, settings_token_key, response):
-        self._settings.set(settings_token_key,
-            [ response["accessToken"], self.__ticks_from_javascript_datetime(response["accessTokenExpires"]) ])
+        if response is None:
+            self._settings.remove(settings_token_key)
+        else:
+            self._settings.set(settings_token_key,
+                [response["accessToken"], self.__ticks_from_javascript_datetime(response["accessTokenExpires"])])
 
     def __ticks_from_javascript_datetime(self, javascript_datetime):
         return re.compile("\/Date\((\d+)\)\/").findall(javascript_datetime)[0]
 
     @property
     def __user_token(self):
-        setting = self._settings.get(Settings._user_token)
-        at = AccessToken(setting)
-        return at
+        return AccessToken(self._settings.get(Settings._user_token))
 
     def set_user_token(self, response):
-        self.__set_access_token(Settings._user_token, response)
+        if response is not None:
+            self.__set_access_token(Settings._user_token, response)
 
-        self._settings.save()
+            self._settings.save()

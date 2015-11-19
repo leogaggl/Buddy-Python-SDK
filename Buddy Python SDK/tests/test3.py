@@ -41,10 +41,8 @@ class Test_test3(TestBase):
     def test_Settings_access_token(self):
         settings = Settings(Test_test3._app_id)
 
-        future = datetime.now(timezone.utc) + timedelta(1)
-
         json = {"accessToken": Test_test3._access_token,
-                "accessTokenExpires": self.javascript_datetime_from_datetime(future),
+                "accessTokenExpires": self.future_javascript_access_token_expires(),
                 "serviceRoot": Test_test3._service_root}
 
         settings.set_device_token(json)
@@ -54,10 +52,8 @@ class Test_test3(TestBase):
     def test_Settings_access_token_expired(self):
         settings = Settings(Test_test3._app_id)
 
-        past = datetime.now(timezone.utc) - timedelta(1)
-
         json = {"accessToken": Test_test3._access_token,
-                "accessTokenExpires": self.javascript_datetime_from_datetime(past),
+                "accessTokenExpires": self.past_javascript_access_token_expires(),
                 "serviceRoot": Test_test3._service_root}
 
         settings.set_device_token(json)

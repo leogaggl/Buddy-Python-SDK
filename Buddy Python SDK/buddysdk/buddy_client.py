@@ -90,6 +90,33 @@ class BuddyClient(object):
     def put(self, path, dictionary):
         return self.__handle_request(self._session.put, path, dictionary)
 
+    def create_user(self, user_name, password, first_name, last_name, email, gender, date_of_birth, tag):
+        response = self.__handle_request(self._session.post, "/users",
+                {
+                    "username" : user_name,
+                    "password" : password,
+                    "firstName" : first_name,
+                    "lastName" : last_name,
+                    "email" : email,
+                    "gender" : gender,
+                    "dateOfBirth" : date_of_birth,
+                    "tag" : tag
+                })
+
+        self._settings.set_user_token(response)
+
+    def login_user(self, user_name, password):
+        response = self.__handle_request(self._session.post, "/users",
+                {
+                    "username" : user_name,
+                    "password" : password,
+                })
+
+        self._settings.set_user_token(response)
+
+    def logout_user(self):
+        self._settings.set_user_token(None)
+
     def __handle_request(self, method, path, dictionary):
         response = None
 
