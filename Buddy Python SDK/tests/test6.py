@@ -1,14 +1,11 @@
 import unittest
 import logging
 import time
-from easysettings import EasySettings
-
 
 from buddy import Buddy
 from connection import Connection
 from test_base import TestBase
 from settings import Settings
-from access_token import AccessToken
 
 
 class Test_test6(TestBase):
@@ -29,7 +26,7 @@ class Test_test6(TestBase):
         settings = Settings(TestBase.US_app_id)
         settings._settings.set(Settings._device_token, ["bad device token", self.future_javascript_access_token_expires()])
 
-        client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key, settings)
+        client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 
         Buddy.post("/metrics/events/key", {})
 
@@ -40,7 +37,7 @@ class Test_test6(TestBase):
         settings._settings.set(Settings._device_token, ["eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIyMDE1LTExLTExVDAzOjM0OjU4LjE2Mjg2NzlaIiwibCI6ImJiYmJ2LnJwZGJ2eGJnR3JNZyIsImEiOiJiYmJiYmMueGdqYnZQZHdrbGx3IiwidSI6bnVsbCwiZCI6ImJsai5sRHBGd0tNc2dGRk0ifQ.l4ob5liSYfgI25mnysjRHpgCYr1yCzayC4XjHJOv4v0",
                                                         self.past_javascript_access_token_expires()])
 
-        client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key, settings)
+        client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 
         Buddy.post("/metrics/events/key", {})
 

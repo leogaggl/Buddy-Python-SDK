@@ -1,15 +1,17 @@
-﻿from connection import Connection
-from events import Events
+﻿from events import Events
 import requests
 from threading import Thread
+from connection import Connection
+from settings import Settings
 
 
 class BuddyClient(object):
-    def __init__(self, app_id, app_key, settings):
+    def __init__(self, app_id, app_key):
+
         self._app_id = app_id
         self._app_key = app_key
 
-        self._settings = settings
+        self._settings = Settings(self._app_id)
         self._session = requests.Session()
         self._session.auth = Auth(self, self._settings)
         self._last_location = None
@@ -17,7 +19,7 @@ class BuddyClient(object):
         self._service_exception = Events()
         self._authentication_changed = Events()
         self._connection_changed = Events()
-        self._connection_retry = Thread(target = self.__connection_retry)
+        self._connection_retry = Thread(target=self.__connection_retry)
         self._connection_level = Connection.On
 
     @property
@@ -56,12 +58,12 @@ class BuddyClient(object):
 
     def __register_device(self):
         response = self.__handle_request(requests.post, "/devices", {
-            "platform" : "Raspberry Pi",
-            "model" : self.__get_model(),
-            "osVersion" : self.__get_os_version(),
-            "uniqueId" : self.__get_serial(),
-            "appid" : self.app_id,
-            "appkey" : self.app_key
+            "appID": self.app_id,
+            "appKey": self.app_key,
+            "platform": "Raspberry Pi",
+            "model": self.__get_model(),
+            "osVersion": self.__get_os_version(),
+            "uniqueId": self.__get_serial(),
         })
 
         self._settings.set_device_token(response)
@@ -92,25 +94,25 @@ class BuddyClient(object):
 
     def create_user(self, user_name, password, first_name, last_name, email, gender, date_of_birth, tag):
         response = self.__handle_request(self._session.post, "/users",
-                {
-                    "username" : user_name,
-                    "password" : password,
-                    "firstName" : first_name,
-                    "lastName" : last_name,
-                    "email" : email,
-                    "gender" : gender,
-                    "dateOfBirth" : date_of_birth,
-                    "tag" : tag
-                })
+            {
+                "username": user_name,
+                "password": password,
+                "firstName": first_name,
+                "lastName": last_name,
+                "email": email,
+                "gender": gender,
+                "dateOfBirth": date_of_birth,
+                "tag": tag
+            })
 
         self._settings.set_user_token(response)
 
     def login_user(self, user_name, password):
         response = self.__handle_request(self._session.post, "/users",
-                {
-                    "username" : user_name,
-                    "password" : password,
-                })
+            {
+                "username": user_name,
+                "password": password,
+            })
 
         self._settings.set_user_token(response)
 
@@ -121,16 +123,14 @@ class BuddyClient(object):
         response = None
 
         try:
-            response = method(self._settings.service_root + path, json = dictionary)
-        except requests.exceptions.RequestException as ex:
+            response = method(self._settings.service_root + path, json=dictionary)
+        except requests.ConnectionError as ex:
             self.__handle_connection_exception(ex)
-        except requests.exceptions.ConnectionError as ex:
-            self.__handle_connection_exception(ex)
-        except requests.exceptions.HTTPError as ex:
+        except requests.HTTPError as ex:
             self.__handle_http_exception(ex)
-        except requests.exceptions.URLRequired as ex:
+        except requests.URLRequired as ex:
             self.__handle_http_exception(ex)
-        except requests.exceptions.Timeout as ex:
+        except requests.Timeout as ex:
             self.__handle_connection_exception(ex)
 
         return self.__handle_response(response)
@@ -160,17 +160,15 @@ class BuddyClient(object):
 
         while not successful:
             try:
-                response = requests.post(self._settings.service_root + "/service/ping")
+                requests.get(self._settings.service_root + "/service/ping")
                 successful = True
-            except requests.exceptions.RequestException:
+            except requests.ConnectionError:
                 successful = False
-            except requests.exceptions.ConnectionError:
+            except requests.HTTPError:
                 successful = False
-            except requests.exceptions.HTTPError:
+            except requests.URLRequired:
                 successful = False
-            except requests.exceptions.URLRequired:
-                successful = False
-            except requests.exceptions.Timeout:
+            except requests.Timeout:
                 successful = False
 
         self.__set_connection_level(Connection.On)

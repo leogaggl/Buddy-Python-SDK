@@ -12,7 +12,7 @@ class AccessToken(object):
 
     @property
     def token(self):
-        if self._token is None or self._token is "" or self._expires <= datetime.now():
+        if self._token is None or self._token is "" or self._expires <= datetime.utcnow():
             return None
         else:
             return self._token

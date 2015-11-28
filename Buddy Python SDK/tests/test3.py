@@ -8,6 +8,7 @@ from test_base import TestBase
 from easysettings import EasySettings
 from access_token import AccessToken
 
+
 class Test_test3(TestBase):
    
     _app_id = "a"

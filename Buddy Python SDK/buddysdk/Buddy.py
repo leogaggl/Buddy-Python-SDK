@@ -1,5 +1,4 @@
 ﻿from buddy_client import BuddyClient
-from settings import Settings
 
 
 class BuddyProperties(type):
@@ -28,18 +27,16 @@ class BuddyProperties(type):
         return Buddy.current_client.connection_changed
 
 
-class Buddy(object, metaclass = BuddyProperties):
+class Buddy(object, metaclass=BuddyProperties):
 
     _clients = {}
     _current_client = None
 
     @staticmethod
-    def init(app_id, app_key, settings = None):
-
-        settings = settings if settings is not None else Settings(app_id)
+    def init(app_id, app_key):
 
         if Buddy._clients.get(app_id) is None:
-            client = BuddyClient(app_id, app_key, settings)
+            client = BuddyClient(app_id, app_key)
             Buddy._clients[app_id] = client
         else:
             client = Buddy._clients.get(app_id)
