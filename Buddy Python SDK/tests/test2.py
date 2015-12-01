@@ -24,5 +24,6 @@ class test_test2(TestBase):
 
         self.assertEqual(Buddy.current_client, client_2)
 
+
 if __name__ == '__main__':
     unittest.main()

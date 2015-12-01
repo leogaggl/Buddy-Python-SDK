@@ -1,11 +1,11 @@
 ﻿from datetime import datetime
 from datetime import timezone
 from datetime import timedelta
+from easysettings import EasySettings
 import unittest
 
 from settings import Settings
 from test_base import TestBase
-from easysettings import EasySettings
 from access_token import AccessToken
 
 
@@ -70,6 +70,7 @@ class Test_test3(TestBase):
 
         self.assertEqual(settings.access_token_string, Test_test3._access_token)
         self.assertEqual(settings.service_root, Test_test3._service_root)
+
 
 if __name__ == '__main__':
     unittest.main()

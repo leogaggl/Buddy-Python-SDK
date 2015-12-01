@@ -12,5 +12,6 @@ class Test_test5(TestBase):
 
         self.assertIsNotNone(result)
 
+
 if __name__ == '__main__':
     unittest.main()

@@ -12,5 +12,6 @@ class test_test1(TestBase):
         self.assertIs(client.app_id, TestBase.US_app_id);
         self.assertIs(client.app_key, TestBase.US_app_key);
 
+
 if __name__ == '__main__':
     unittest.main()

@@ -39,6 +39,10 @@ class BuddyClient(object):
         self._last_location = value
 
     @property
+    def current_user_id(self):
+        return self._settings.user_id
+
+    @property
     def service_exception(self):
         return self._service_exception
 
@@ -57,14 +61,15 @@ class BuddyClient(object):
         return self._settings.access_token_string
 
     def __register_device(self):
-        response = self.__handle_request(requests.post, "/devices", {
-            "appID": self.app_id,
-            "appKey": self.app_key,
-            "platform": "Raspberry Pi",
-            "model": self.__get_model(),
-            "osVersion": self.__get_os_version(),
-            "uniqueId": self.__get_serial(),
-        })
+        response = self.__handle_request(requests.post, "/devices",
+            {
+                "appID": self.app_id,
+                "appKey": self.app_key,
+                "platform": "Raspberry Pi",
+                "model": self.__get_model(),
+                "osVersion": self.__get_os_version(),
+                "uniqueId": self.__get_serial(),
+            })
 
         self._settings.set_device_token(response)
 
@@ -86,13 +91,22 @@ class BuddyClient(object):
     def __get_os_version(self):
         return "os_version"
 
+    def get(self, path):
+        return self.__handle_request(self._session.get, path)
+
+    def delete(self, path):
+        return self.__handle_request(self._session.delete, path)
+
+    def patch(self, path, dictionary):
+        return self.__handle_request(self._session.patch, path, dictionary)
+
     def post(self, path, dictionary):
         return self.__handle_request(self._session.post, path, dictionary)
 
     def put(self, path, dictionary):
         return self.__handle_request(self._session.put, path, dictionary)
 
-    def create_user(self, user_name, password, first_name, last_name, email, gender, date_of_birth, tag):
+    def create_user(self, user_name, password, first_name=None, last_name=None, email=None, gender=None, date_of_birth=None, tag=None):
         response = self.__handle_request(self._session.post, "/users",
             {
                 "username": user_name,
@@ -105,21 +119,25 @@ class BuddyClient(object):
                 "tag": tag
             })
 
-        self._settings.set_user_token(response)
+        self._settings.set_user(response)
+
+        return response
 
     def login_user(self, user_name, password):
-        response = self.__handle_request(self._session.post, "/users",
+        response = self.__handle_request(self._session.post, "/users/login",
             {
                 "username": user_name,
                 "password": password,
             })
 
-        self._settings.set_user_token(response)
+        self._settings.set_user(response)
+
+        return response
 
     def logout_user(self):
-        self._settings.set_user_token(None)
+        self._settings.set_user(None)
 
-    def __handle_request(self, method, path, dictionary):
+    def __handle_request(self, method, path, dictionary=None):
         response = None
 
         try:

@@ -7,6 +7,10 @@ class BuddyProperties(type):
         return Buddy._current_client
 
     @property
+    def current_user_id(cls):
+        return Buddy.current_client.current_user_id
+
+    @property
     def last_location(cls):
         return Buddy.current_client.last_location
 
@@ -46,6 +50,18 @@ class Buddy(object, metaclass=BuddyProperties):
         return Buddy.current_client
 
     @staticmethod
+    def delete(path):
+        return Buddy.current_client.delete(path)
+
+    @staticmethod
+    def get(path):
+        return Buddy.current_client.get(path)
+
+    @staticmethod
+    def patch(path, dictionary):
+        return Buddy.current_client.patch(path, dictionary)
+
+    @staticmethod
     def post(path, dictionary):
         return Buddy.current_client.post(path, dictionary)
 
@@ -54,7 +70,7 @@ class Buddy(object, metaclass=BuddyProperties):
         return Buddy.current_client.put(path, dictionary)
 
     @staticmethod
-    def create_user(user_name, password, first_name, last_name, email, gender, date_of_birth, tag):
+    def create_user(user_name, password, first_name=None, last_name=None, email=None, gender=None, date_of_birth=None, tag=None):
        return Buddy.current_client.create_user(user_name, password, first_name, last_name, email, gender, date_of_birth, tag)
 
     @staticmethod
@@ -63,8 +79,4 @@ class Buddy(object, metaclass=BuddyProperties):
 
     @staticmethod
     def logout_user():
-       return Buddy.current_client.logout_user()
-
-    @staticmethod
-    def get_current_user(self):
-        return Buddy.current_client.get_current_user()
+        Buddy.current_client.logout_user()
