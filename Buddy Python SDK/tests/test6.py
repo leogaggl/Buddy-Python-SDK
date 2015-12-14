@@ -24,7 +24,8 @@ class Test_test6(TestBase):
 
     def test_bad_device_token(self):
         settings = Settings(TestBase.US_app_id)
-        settings._settings.set(Settings._device_token, ["bad device token", self.future_javascript_access_token_expires()])
+        settings.set_device_token({"accessToken": "bad device token",
+                                   "accessTokenExpires": self.future_javascript_access_token_expires()})
 
         client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 
@@ -34,8 +35,8 @@ class Test_test6(TestBase):
 
     def test_device_token_expired(self):
         settings = Settings(TestBase.US_app_id)
-        settings._settings.set(Settings._device_token, ["eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIyMDE1LTExLTExVDAzOjM0OjU4LjE2Mjg2NzlaIiwibCI6ImJiYmJ2LnJwZGJ2eGJnR3JNZyIsImEiOiJiYmJiYmMueGdqYnZQZHdrbGx3IiwidSI6bnVsbCwiZCI6ImJsai5sRHBGd0tNc2dGRk0ifQ.l4ob5liSYfgI25mnysjRHpgCYr1yCzayC4XjHJOv4v0",
-                                                        self.past_javascript_access_token_expires()])
+        settings.set_device_token({"accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIyMDE1LTExLTExVDAzOjM0OjU4LjE2Mjg2NzlaIiwibCI6ImJiYmJ2LnJwZGJ2eGJnR3JNZyIsImEiOiJiYmJiYmMueGdqYnZQZHdrbGx3IiwidSI6bnVsbCwiZCI6ImJsai5sRHBGd0tNc2dGRk0ifQ.l4ob5liSYfgI25mnysjRHpgCYr1yCzayC4XjHJOv4v0",
+                                   "accessTokenExpires": self.past_javascript_access_token_expires()})
 
         client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 

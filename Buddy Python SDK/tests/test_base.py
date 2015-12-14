@@ -1,9 +1,9 @@
 ﻿from datetime import datetime
 from datetime import timezone
 from datetime import timedelta
-from easysettings import EasySettings
 from unittest import TestCase
-
+import os
+from settings import Settings
 
 class TestBase(TestCase):
  
@@ -13,9 +13,14 @@ class TestBase(TestCase):
     EU_app_key = "76123a72-4d05-93db-f297-b8a7501fd2f7"
 
     def setUp(self):
-        es = EasySettings("buddy.conf")
-        es.clear()
-        es.save()
+        try:
+            os.remove("buddy.cfg")
+        finally:
+            return
+
+    def setup_with_bad_device_token(self):
+        settings = Settings(TestBase.US_app_id)
+        settings.set_device_token({"accessToken": "bad device token", "accessTokenExpires": self.past_javascript_access_token_expires()})
 
     def future_javascript_access_token_expires(self):
         return self.__javascript_access_token_expires(1)

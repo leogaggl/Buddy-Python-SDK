@@ -1,7 +1,6 @@
 ﻿from datetime import datetime
 from datetime import timezone
 from datetime import timedelta
-from easysettings import EasySettings
 import unittest
 
 from settings import Settings
@@ -33,10 +32,7 @@ class Test_test3(TestBase):
         self.assertEqual(at.token, None)
 
     def access_token_base(self, time):
-        es = EasySettings("buddy.conf", TestBase.US_app_id)
-        es.set(Settings._device_token, [Test_test3._access_token, str(self.ticks_from_timestamp(time.timestamp()))])
-        result = es.get(Settings._device_token)
-        at = AccessToken(result)
+        at = AccessToken([Test_test3._access_token, str(self.ticks_from_timestamp(time.timestamp()))])
         return at
 
     def test_Settings_access_token(self):

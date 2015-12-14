@@ -9,8 +9,7 @@ from test_base import TestBase
 class Test_test7(TestBase):
 
     def test_create_user(self):
-        settings = Settings(TestBase.US_app_id)
-        settings.set_device_token({"accessToken": "bad device token", "accessTokenExpires": self.past_javascript_access_token_expires()})
+        self.setup_with_bad_device_token()
 
         Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 
@@ -33,8 +32,7 @@ class Test_test7(TestBase):
         self.assertEqual(Buddy.current_user_id, user["id"])
 
     def test_create_logout_login_user(self):
-        settings = Settings(TestBase.US_app_id)
-        settings.set_device_token({"accessToken": "bad device token", "accessTokenExpires": self.past_javascript_access_token_expires()})
+        self.setup_with_bad_device_token()
 
         Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 

@@ -3,7 +3,7 @@ from datetime import datetime
 
 class AccessToken(object):
     def __init__(self, values):
-        if values is "":
+        if values is None or values is "":
             self._token = ""
             self.__set_expires(None)
         else:
