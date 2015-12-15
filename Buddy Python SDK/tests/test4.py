@@ -15,9 +15,9 @@ class Test_test4(TestBase):
         self.register_device(self, TestBase.EU_app_id, TestBase.EU_app_key, "https://api-eu")
 
     def register_device(self, test, app_id, app_key, service_root_starts_with):
-        self.setup_with_bad_device_token()
+        self.setup_with_bad_tokens()
 
-        client = Buddy.init(app_id, app_key)
+        client = Buddy.init(app_id, app_key, service_root_starts_with)
 
         access_token_string = client.get_access_token_string()
 

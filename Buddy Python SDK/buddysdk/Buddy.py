@@ -37,13 +37,14 @@ class Buddy(object, metaclass=BuddyProperties):
     _current_client = None
 
     @staticmethod
-    def init(app_id, app_key):
+    def init(app_id, app_key, instance_name=None):
 
-        if Buddy._clients.get(app_id) is None:
+        index = app_id if instance_name is None else app_id + instance_name
+        if Buddy._clients.get(index) is None:
             client = BuddyClient(app_id, app_key)
-            Buddy._clients[app_id] = client
+            Buddy._clients[index] = client
         else:
-            client = Buddy._clients.get(app_id)
+            client = Buddy._clients.get(index)
 
         Buddy._current_client = client
 

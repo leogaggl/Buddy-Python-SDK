@@ -18,9 +18,10 @@ class TestBase(TestCase):
         finally:
             return
 
-    def setup_with_bad_device_token(self):
+    def setup_with_bad_tokens(self):
         settings = Settings(TestBase.US_app_id)
         settings.set_device_token({"accessToken": "bad device token", "accessTokenExpires": self.past_javascript_access_token_expires()})
+        settings.set_user({"id": "bad", "accessToken": "bad user token", "accessTokenExpires": self.past_javascript_access_token_expires()})
 
     def future_javascript_access_token_expires(self):
         return self.__javascript_access_token_expires(1)

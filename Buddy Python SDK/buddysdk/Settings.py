@@ -1,5 +1,6 @@
 ﻿import configparser
 import re
+import os
 from access_token import AccessToken
 
 class Settings(object):
@@ -8,12 +9,17 @@ class Settings(object):
     _user_token = "user"
     _user_id = "user_id"
     _default_service_root = "https://api.buddyplatform.com"
+    _buddy_cfg = "buddy.cfg"
+    _access_token_key = "_access_token"
+    _access_token_expires_key = "_access_token_expires"
 
     def __init__(self, app_id):
         self._app_id = app_id
 
         self._settings = configparser.ConfigParser()
-        self._settings.read("buddy.cfg")
+        if os.path.isfile(Settings._buddy_cfg):
+            with open(Settings._buddy_cfg, "r") as configfile:
+                self._settings.read_file(configfile)
 
         if not self._settings.has_section(self._app_id):
             self._settings.add_section(self._app_id)
@@ -47,18 +53,18 @@ class Settings(object):
 
         self.__save()
 
+    def __get_access_token(self, settings_token_key):
+        return [self.__get(settings_token_key + Settings._access_token_key),
+                self.__get(settings_token_key + Settings._access_token_expires_key)]
+
     def __set_access_token(self, settings_token_key, response):
         if response is None:
-            self.__remove(settings_token_key + "_access_token")
-            self.__remove(settings_token_key + "_access_token_expires")
+            self.__remove(settings_token_key + Settings._access_token_key)
+            self.__remove(settings_token_key + Settings._access_token_expires_key)
         else:
-            self.__set(settings_token_key + "_access_token", response["accessToken"])
-            self.__set(settings_token_key + "_access_token_expires",
+            self.__set(settings_token_key + Settings._access_token_key, response["accessToken"])
+            self.__set(settings_token_key + Settings._access_token_expires_key,
                        self.__ticks_from_javascript_datetime(response["accessTokenExpires"]))
-
-    def __get_access_token(self, settings_token_key):
-        return [self.__get(settings_token_key + "_access_token"),
-                           self.__get(settings_token_key + "_access_token_expires")]
 
     def __ticks_from_javascript_datetime(self, javascript_datetime):
         return re.compile("\/Date\((\d+)\)\/").findall(javascript_datetime)[0]
@@ -82,7 +88,7 @@ class Settings(object):
         self.__save()
 
     def __save(self):
-        with open('buddy.cfg', 'w+') as configfile:
+        with open(Settings._buddy_cfg, "w") as configfile:
             self._settings.write(configfile)
 
     def __get(self, option):

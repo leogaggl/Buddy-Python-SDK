@@ -9,9 +9,8 @@ from test_base import TestBase
 class Test_test7(TestBase):
 
     def test_create_user(self):
-        self.setup_with_bad_device_token()
-
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
+        self.setup_with_bad_tokens()
+        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_create_user")
 
         users = Buddy.get("/users")
         self.assertIsNotNone(users)
@@ -32,9 +31,9 @@ class Test_test7(TestBase):
         self.assertEqual(Buddy.current_user_id, user["id"])
 
     def test_create_logout_login_user(self):
-        self.setup_with_bad_device_token()
+        self.setup_with_bad_tokens()
 
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key)
+        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_create_logout_login_user")
 
         users = Buddy.get("/users")
         self.assertIsNotNone(users)
