@@ -51,20 +51,20 @@ class Buddy(object, metaclass=BuddyProperties):
         return Buddy.current_client
 
     @staticmethod
-    def delete(path):
-        return Buddy.current_client.delete(path)
+    def delete(path, parameters=None):
+        return Buddy.current_client.delete(path, parameters)
 
     @staticmethod
-    def get(path):
-        return Buddy.current_client.get(path)
+    def get(path, parameters=None):
+        return Buddy.current_client.get(path, parameters)
 
     @staticmethod
     def patch(path, dictionary):
         return Buddy.current_client.patch(path, dictionary)
 
     @staticmethod
-    def post(path, dictionary):
-        return Buddy.current_client.post(path, dictionary)
+    def post(path, dictionary, file=None):
+        return Buddy.current_client.post(path, dictionary, file)
 
     @staticmethod
     def put(path, dictionary):

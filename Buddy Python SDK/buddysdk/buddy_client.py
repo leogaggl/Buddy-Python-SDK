@@ -61,8 +61,8 @@ class BuddyClient(object):
         return self._settings.access_token_string
 
     def __register_device(self):
-        response = self.__handle_request(requests.post, "/devices",
-            {
+        response = self.__handle_dictionary_request(requests.post, "/devices",
+                                        {
                 "appID": self.app_id,
                 "appKey": self.app_key,
                 "platform": "Raspberry Pi",
@@ -91,24 +91,24 @@ class BuddyClient(object):
     def __get_os_version(self):
         return "os_version"
 
-    def get(self, path):
-        return self.__handle_request(self._session.get, path)
+    def get(self, path, parameters):
+        return self.__handle_parameters_request(self._session.get, path, parameters)
 
-    def delete(self, path):
-        return self.__handle_request(self._session.delete, path)
+    def delete(self, path, parameters):
+        return self.__handle_parameters_request(self._session.delete, path, parameters)
 
     def patch(self, path, dictionary):
-        return self.__handle_request(self._session.patch, path, dictionary)
+        return self.__handle_dictionary_request(self._session.patch, path, dictionary)
 
-    def post(self, path, dictionary):
-        return self.__handle_request(self._session.post, path, dictionary)
+    def post(self, path, dictionary, file=None):
+        return self.__handle_dictionary_request(self._session.post, path, dictionary, file)
 
     def put(self, path, dictionary):
-        return self.__handle_request(self._session.put, path, dictionary)
+        return self.__handle_dictionary_request(self._session.put, path, dictionary)
 
     def create_user(self, user_name, password, first_name=None, last_name=None, email=None, gender=None, date_of_birth=None, tag=None):
-        response = self.__handle_request(self._session.post, "/users",
-            {
+        response = self.__handle_dictionary_request(self._session.post, "/users",
+                                        {
                 "username": user_name,
                 "password": password,
                 "firstName": first_name,
@@ -124,8 +124,8 @@ class BuddyClient(object):
         return response
 
     def login_user(self, user_name, password):
-        response = self.__handle_request(self._session.post, "/users/login",
-            {
+        response = self.__handle_dictionary_request(self._session.post, "/users/login",
+                                        {
                 "username": user_name,
                 "password": password,
             })
@@ -137,19 +137,34 @@ class BuddyClient(object):
     def logout_user(self):
         self._settings.set_user(None)
 
-    def __handle_request(self, method, path, dictionary=None):
+    def __handle_parameters_request(self, verb, path, parameters=None):
+        def closure():
+            return verb(self._settings.service_root + path, params=parameters)
+
+        return self.__handle_request(closure)
+
+    def __handle_dictionary_request(self, verb, path, dictionary, file=None):
+        def closure():
+            if file is None:
+                return verb(self._settings.service_root + path, json=dictionary)
+            else:
+                return verb(self._settings.service_root + path, json=dictionary, files={"data": ("data",) + file})
+
+        return self.__handle_request(closure)
+
+    def __handle_request(self, closure):
         response = None
 
         try:
-            response = method(self._settings.service_root + path, json=dictionary)
+            response = closure()
         except requests.ConnectionError as ex:
-            self.__handle_connection_exception(ex)
+            return self.__handle_connection_exception(ex)
         except requests.HTTPError as ex:
-            self.__handle_http_exception(ex)
+            return self.__handle_http_exception(ex)
         except requests.URLRequired as ex:
-            self.__handle_http_exception(ex)
+            return self.__handle_http_exception(ex)
         except requests.Timeout as ex:
-            self.__handle_connection_exception(ex)
+            return self.__handle_connection_exception(ex)
 
         return self.__handle_response(response)
 
@@ -165,13 +180,14 @@ class BuddyClient(object):
                 return None
 
     def __handle_http_exception(self, exception):
-        pass
+        return None
 
     def __handle_connection_exception(self, exception):
         self.__set_connection_level(Connection.Off)
 
         if not self._connection_retry.isAlive():
             self._connection_retry.start()
+        return None
 
     def __connection_retry(self):
         successful = False
