@@ -57,14 +57,14 @@ class Settings(object):
         return [self.__get(settings_token_key + Settings._access_token_key),
                 self.__get(settings_token_key + Settings._access_token_expires_key)]
 
-    def __set_access_token(self, settings_token_key, response):
-        if response is None:
+    def __set_access_token(self, settings_token_key, result):
+        if result is None:
             self.__remove(settings_token_key + Settings._access_token_key)
             self.__remove(settings_token_key + Settings._access_token_expires_key)
         else:
-            self.__set(settings_token_key + Settings._access_token_key, response["accessToken"])
+            self.__set(settings_token_key + Settings._access_token_key, result["accessToken"])
             self.__set(settings_token_key + Settings._access_token_expires_key,
-                       self.__ticks_from_javascript_datetime(response["accessTokenExpires"]))
+                       self.__ticks_from_javascript_datetime(result["accessTokenExpires"]))
 
     def __ticks_from_javascript_datetime(self, javascript_datetime):
         return re.compile("\/Date\((\d+)\)\/").findall(javascript_datetime)[0]
@@ -77,13 +77,13 @@ class Settings(object):
     def user_id(self):
         return self.__get(Settings._user_id)
 
-    def set_user(self, response):
-        self.__set_access_token(Settings._user_token, response)
+    def set_user(self, result):
+        self.__set_access_token(Settings._user_token, result)
 
-        if response is None:
+        if result is None:
             self.__remove(Settings._user_id)
         else:
-            self.__set(Settings._user_id, response["id"])
+            self.__set(Settings._user_id, result["id"])
 
         self.__save()
 

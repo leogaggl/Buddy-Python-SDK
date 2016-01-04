@@ -23,8 +23,8 @@ class BuddyProperties(type):
         return Buddy.current_client.service_exception
 
     @property
-    def authentication_changed(cls):
-        return Buddy.current_client.authentication_changed
+    def authentication_needed(cls):
+        return Buddy.current_client.authentication_needed
 
     @property
     def connection_changed(cls):

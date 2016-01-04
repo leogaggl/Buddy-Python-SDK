@@ -10,6 +10,7 @@ from settings import Settings
 
 class Test_test6(TestBase):
 
+    # run with network off and a breakpoint at time.sleep
     def test_connection(self):
         Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_connection")
 
@@ -50,7 +51,7 @@ class ConnectionLogger(object):
         self.connection = Connection.On # switch to None when debugging w\ no connection
 
     def log(self, connection):
-        logging.info("connectivity_logger: " + str(connection.value))
+        logging.info("connection_changed.log: " + str(connection.value))
         self.connection = connection
 
 

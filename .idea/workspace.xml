@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5f760ad-144d-4a48-82e1-7ff036070725" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Buddy Python SDK/tests/Buddy Logo.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Buddy.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Buddy.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy_client.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy_client.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/tests/test6.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/tests/test6.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buddy Python SDK/tests/test_base.py" afterPath="$PROJECT_DIR$/Buddy Python SDK/tests/test_base.py" />
     </list>
     <ignored path="Buddy Python.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,18 +61,52 @@
       <file leaf-file-name="test7.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test7.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21008404">
-              <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.37535015">
+              <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="79" column="8" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test4.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test4.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="case.py" pinned="false" current-in-tab="false">
-        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/unittest/case.py">
+      <file leaf-file-name="test5.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test5.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="584" column="0" selection-start-line="584" selection-start-column="0" selection-end-line="584" selection-end-column="0" />
+              <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test6.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test6.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -84,11 +115,41 @@
       <file leaf-file-name="buddy_client.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy_client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.4444447">
-              <caret line="149" column="17" selection-start-line="149" selection-start-column="17" selection-end-line="149" selection-end-column="17" />
+            <state vertical-scroll-proportion="-4.888889">
+              <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="events.py" pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/events/events.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="response.py" pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/requests/packages/urllib3/response.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="373" column="0" selection-start-line="373" selection-start-column="0" selection-end-line="373" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sessions.py" pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/requests/sessions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="479" column="0" selection-start-line="479" selection-start-column="0" selection-end-line="479" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -97,7 +158,7 @@
         <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -134,12 +195,12 @@
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/buddy.cfg" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/access_token.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/Settings.py" />
-        <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/settings.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test4.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test5.py" />
-        <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test6.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test_base.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy.py" />
+        <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test6.py" />
+        <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/settings.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy_client.py" />
         <option value="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" />
       </list>
@@ -334,8 +395,8 @@
       </console-settings>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittest Test_test7.test_upload_pic">
-    <configuration default="false" name="Unittest Test_test7.test_create_logout_login_user" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Unittest Test_test7.test_auth_error">
+    <configuration default="false" name="Unittest Test_test7.test_authentication" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -348,9 +409,32 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" />
       <option name="CLASS_NAME" value="Test_test7" />
-      <option name="METHOD_NAME" value="test_create_logout_login_user" />
+      <option name="METHOD_NAME" value="test_authentication" />
       <option name="FOLDER_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests" />
       <option name="TEST_TYPE" value="TEST_METHOD" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittests in Test_test7" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Buddy Python SDK/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Buddy Python" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" />
+      <option name="CLASS_NAME" value="Test_test7" />
+      <option name="METHOD_NAME" value="test_authentication" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests" />
+      <option name="TEST_TYPE" value="TEST_CLASS" />
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
       <option name="PUREUNITTEST" value="true" />
@@ -371,7 +455,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" />
       <option name="CLASS_NAME" value="Test_test7" />
-      <option name="METHOD_NAME" value="test_create_logout_login_user" />
+      <option name="METHOD_NAME" value="test_authentication" />
       <option name="FOLDER_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests" />
       <option name="TEST_TYPE" value="TEST_CLASS" />
       <option name="PATTERN" value="" />
@@ -381,7 +465,7 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="Unittest Test_test7.test_create_user" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="Unittests in Test_test7 (4)" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -394,30 +478,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" />
       <option name="CLASS_NAME" value="Test_test7" />
-      <option name="METHOD_NAME" value="test_create_user" />
-      <option name="FOLDER_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests" />
-      <option name="TEST_TYPE" value="TEST_METHOD" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Unittests in Test_test7 (2)" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Buddy Python SDK/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Buddy Python" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" />
-      <option name="CLASS_NAME" value="Test_test7" />
-      <option name="METHOD_NAME" value="test_create_user" />
+      <option name="METHOD_NAME" value="test_authentication" />
       <option name="FOLDER_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests" />
       <option name="TEST_TYPE" value="TEST_CLASS" />
       <option name="PATTERN" value="" />
@@ -427,7 +488,7 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="Unittest Test_test7.test_upload_pic" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="Unittest Test_test7.test_auth_error" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -440,7 +501,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests/test7.py" />
       <option name="CLASS_NAME" value="Test_test7" />
-      <option name="METHOD_NAME" value="test_upload_pic" />
+      <option name="METHOD_NAME" value="test_auth_error" />
       <option name="FOLDER_NAME" value="$PROJECT_DIR$/Buddy Python SDK/tests" />
       <option name="TEST_TYPE" value="TEST_METHOD" />
       <option name="PATTERN" value="" />
@@ -622,19 +683,19 @@
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Python.Local" />
       <item index="1" class="java.lang.String" itemvalue="Python tests.Tests" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_create_logout_login_user" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7 (1)" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_create_user" />
-      <item index="5" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7 (2)" />
-      <item index="6" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_upload_pic" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_authentication" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7 (1)" />
+      <item index="5" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7 (4)" />
+      <item index="6" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_auth_error" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_upload_pic" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7 (2)" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_create_user" />
-        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7 (1)" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_create_logout_login_user" />
+        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_auth_error" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7 (4)" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7 (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in Test_test7" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest Test_test7.test_authentication" />
       </list>
     </recent_temporary>
   </component>
@@ -657,35 +718,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 10m 27s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittest_Test_test7_test_auth_error - 2016.01.03 at 23h 27m 58s.xml">
+      <configuration name="Unittest Test_test7.test_auth_error" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 14m 02s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittest_Test_test7_test_auth_error - 2016.01.03 at 23h 28m 49s.xml">
+      <configuration name="Unittest Test_test7.test_auth_error" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 15m 14s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittest_Test_test7_test_authentication - 2016.01.03 at 22h 33m 28s.xml">
+      <configuration name="Unittest Test_test7.test_authentication" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 15m 53s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittest_Test_test7_test_authentication - 2016.01.03 at 22h 35m 26s.xml">
+      <configuration name="Unittest Test_test7.test_authentication" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 16m 18s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittest_Test_test7_test_authentication - 2016.01.03 at 22h 36m 02s.xml">
+      <configuration name="Unittest Test_test7.test_authentication" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 16m 23s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittest_Test_test7_test_authentication - 2016.01.03 at 22h 36m 11s.xml">
+      <configuration name="Unittest Test_test7.test_authentication" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 16m 35s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittests_in_Test_test7 - 2016.01.03 at 22h 51m 49s.xml">
+      <configuration name="Unittests in Test_test7" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 24m 12s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittests_in_Test_test7_(1) - 2016.01.03 at 22h 52m 18s.xml">
+      <configuration name="Unittests in Test_test7 (1)" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 24m 47s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittests_in_Test_test7_(3) - 2016.01.03 at 22h 32m 03s.xml">
+      <configuration name="Unittests in Test_test7 (3)" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_Test_test7_test_upload_pic - 2016.01.02 at 16h 24m 53s.xml">
-      <configuration name="Unittest Test_test7.test_upload_pic" configurationId="tests" />
+    <history-entry file="Unittests_in_Test_test7_(4) - 2016.01.03 at 22h 53m 57s.xml">
+      <configuration name="Unittests in Test_test7 (4)" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -757,8 +818,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/Buddy Python SDK/tests/test7.py</url>
-          <line>76</line>
-          <option name="timeStamp" value="154" />
+          <line>89</line>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Buddy Python SDK/tests/test7.py</url>
+          <line>101</line>
+          <option name="timeStamp" value="161" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -768,45 +834,18 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="155" />
+      <option name="time" value="163" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="tests">
-        <watch expression="(&quot;a&quot;, &quot;b&quot;)" language="Python" />
-        <watch expression="(&quot;data&quot;)" language="Python" />
-        <watch expression="(&quot;data&quot;,)" language="Python" />
+        <watch expression="response[&quot;result&quot;][&quot;accessToken&quot;]" language="Python" />
+        <watch expression="response.status_code" language="Python" />
+        <watch expression="response.status_code is 403" language="Python" />
+        <watch expression="response.status_code == 403" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="64" selection-start-line="66" selection-start-column="64" selection-end-line="66" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="81" selection-start-line="44" selection-start-column="43" selection-end-line="44" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#29#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#29#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1004,20 +1043,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43933055">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78451884">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/easysettings/easy_settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1046,27 +1071,6 @@
           <folding>
             <element signature="e#0#29#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test4.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test5.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test6.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -1135,20 +1139,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/settings.py">
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/unittest/case.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.5460251">
+          <caret line="584" column="0" selection-start-line="584" selection-start-column="0" selection-end-line="584" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/unittest/case.py">
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="584" column="0" selection-start-line="584" selection-start-column="0" selection-end-line="584" selection-end-column="0" />
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test6.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/requests/sessions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="479" column="0" selection-start-line="479" selection-start-column="0" selection-end-line="479" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/requests/packages/urllib3/response.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="373" column="0" selection-start-line="373" selection-start-column="0" selection-end-line="373" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1156,15 +1206,33 @@
     <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/events/events.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="79" column="8" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Buddy Python SDK/buddysdk/buddy_client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.4444447">
-          <caret line="149" column="17" selection-start-line="149" selection-start-column="17" selection-end-line="149" selection-end-column="17" />
+        <state vertical-scroll-proportion="-4.888889">
+          <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -1173,9 +1241,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Buddy Python SDK/tests/test7.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21008404">
-          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
-          <folding />
+        <state vertical-scroll-proportion="0.37535015">
+          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -17,7 +17,7 @@ class BuddyClient(object):
         self._last_location = None
 
         self._service_exception = Events()
-        self._authentication_changed = Events()
+        self._authentication_needed = Events()
         self._connection_changed = Events()
         self._connection_retry = Thread(target=self.__connection_retry)
         self._connection_level = Connection.On
@@ -47,8 +47,8 @@ class BuddyClient(object):
         return self._service_exception
 
     @property
-    def authentication_changed(self):
-        return self._authentication_changed
+    def authentication_needed(self):
+        return self._authentication_needed
 
     @property
     def connection_changed(self):
@@ -62,7 +62,7 @@ class BuddyClient(object):
 
     def __register_device(self):
         response = self.__handle_dictionary_request(requests.post, "/devices",
-                                        {
+            {
                 "appID": self.app_id,
                 "appKey": self.app_key,
                 "platform": "Raspberry Pi",
@@ -71,7 +71,7 @@ class BuddyClient(object):
                 "uniqueId": self.__get_serial(),
             })
 
-        self._settings.set_device_token(response)
+        self._settings.set_device_token(response["result"])
 
     def __get_serial(self):
         cpuserial = "0000000000000000"
@@ -108,7 +108,7 @@ class BuddyClient(object):
 
     def create_user(self, user_name, password, first_name=None, last_name=None, email=None, gender=None, date_of_birth=None, tag=None):
         response = self.__handle_dictionary_request(self._session.post, "/users",
-                                        {
+            {
                 "username": user_name,
                 "password": password,
                 "firstName": first_name,
@@ -119,18 +119,18 @@ class BuddyClient(object):
                 "tag": tag
             })
 
-        self._settings.set_user(response)
+        self._settings.set_user(response["result"])
 
         return response
 
     def login_user(self, user_name, password):
         response = self.__handle_dictionary_request(self._session.post, "/users/login",
-                                        {
+            {
                 "username": user_name,
                 "password": password,
             })
 
-        self._settings.set_user(response)
+        self._settings.set_user(response["result"])
 
         return response
 
@@ -172,12 +172,10 @@ class BuddyClient(object):
         if response is None:
             return None
         else:
-            #if response.status_code is 401 or response.status_code is 403
-            json = response.json()
-            if "result" in json:
-                return json["result"]
-            else:
-                return None
+            if response.status_code == 401 or response.status_code == 403:
+                self._authentication_needed.on_change()
+
+            return response.json()
 
     def __handle_http_exception(self, exception):
         return None
