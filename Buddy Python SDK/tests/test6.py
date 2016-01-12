@@ -14,7 +14,7 @@ class Test_test6(TestBase):
     def test_connection(self):
         Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_connection")
 
-        logger = ConnectionLogger();
+        logger = ConnectionLogger()
 
         Buddy.connection_changed.on_change += logger.log
 

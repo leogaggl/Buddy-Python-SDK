@@ -93,9 +93,13 @@ class Test_test7(TestBase):
     def test_auth(self):
         Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_auth")
 
-        logger = AuthLogger();
+        logger = AuthLogger()
 
-        Buddy.logout_user();
+        test_user = "testuser" + str(uuid4())
+        test_password = "testpassword"
+        Buddy.create_user(test_user, test_password)
+
+        Buddy.logout_user()
 
         Buddy.authentication_needed.on_change += logger.log
 
