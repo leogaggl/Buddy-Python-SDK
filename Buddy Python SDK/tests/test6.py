@@ -48,7 +48,7 @@ class Test_test6(TestBase):
 
 class ConnectionLogger(object):
     def __init__(self):
-        self.connection = Connection.On # switch to None when debugging w\ no connection
+        self.connection = Connection.On # switch to None when debugging test_connection
 
     def log(self, connection):
         logging.info("connection_changed.log: " + str(connection.value))

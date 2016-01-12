@@ -26,7 +26,7 @@ class Settings(object):
 
     @property
     def service_root(self):
-        service_root = self.__get(Settings._service_root)
+        service_root = self._get(Settings._service_root)
         if service_root is None:
             return Settings._default_service_root
         else:
@@ -41,64 +41,64 @@ class Settings(object):
 
     @property
     def device_token(self):
-        return AccessToken(self.__get_access_token(Settings._device_token))
+        return AccessToken(self._get_access_token(Settings._device_token))
 
     def set_device_token(self, response):
-        self.__set_access_token(Settings._device_token, response)
+        self._set_access_token(Settings._device_token, response)
 
         if response is None or "serviceRoot" not in response:
-            self.__remove(Settings._service_root)
+            self._remove(Settings._service_root)
         else:
-            self.__set(Settings._service_root, response["serviceRoot"])
+            self._set(Settings._service_root, response["serviceRoot"])
 
-        self.__save()
+        self._save()
 
-    def __get_access_token(self, settings_token_key):
-        return [self.__get(settings_token_key + Settings._access_token_key),
-                self.__get(settings_token_key + Settings._access_token_expires_key)]
+    def _get_access_token(self, settings_token_key):
+        return [self._get(settings_token_key + Settings._access_token_key),
+                self._get(settings_token_key + Settings._access_token_expires_key)]
 
-    def __set_access_token(self, settings_token_key, result):
+    def _set_access_token(self, settings_token_key, result):
         if result is None:
-            self.__remove(settings_token_key + Settings._access_token_key)
-            self.__remove(settings_token_key + Settings._access_token_expires_key)
+            self._remove(settings_token_key + Settings._access_token_key)
+            self._remove(settings_token_key + Settings._access_token_expires_key)
         else:
-            self.__set(settings_token_key + Settings._access_token_key, result["accessToken"])
-            self.__set(settings_token_key + Settings._access_token_expires_key,
-                       self.__ticks_from_javascript_datetime(result["accessTokenExpires"]))
+            self._set(settings_token_key + Settings._access_token_key, result["accessToken"])
+            self._set(settings_token_key + Settings._access_token_expires_key,
+                      self._ticks_from_javascript_datetime(result["accessTokenExpires"]))
 
-    def __ticks_from_javascript_datetime(self, javascript_datetime):
+    def _ticks_from_javascript_datetime(self, javascript_datetime):
         return re.compile("\/Date\((\d+)\)\/").findall(javascript_datetime)[0]
 
     @property
     def user_token(self):
-        return AccessToken(self.__get_access_token(Settings._user_token))
+        return AccessToken(self._get_access_token(Settings._user_token))
 
     @property
     def user_id(self):
-        return self.__get(Settings._user_id)
+        return self._get(Settings._user_id)
 
     def set_user(self, result):
-        self.__set_access_token(Settings._user_token, result)
+        self._set_access_token(Settings._user_token, result)
 
         if result is None:
-            self.__remove(Settings._user_id)
+            self._remove(Settings._user_id)
         else:
-            self.__set(Settings._user_id, result["id"])
+            self._set(Settings._user_id, result["id"])
 
-        self.__save()
+        self._save()
 
-    def __save(self):
+    def _save(self):
         with open(Settings._buddy_cfg, "w") as configfile:
             self._settings.write(configfile)
 
-    def __get(self, option):
+    def _get(self, option):
         if self._settings.has_option(self._app_id, option):
             return self._settings.get(self._app_id, option)
         else:
             return None
 
-    def __set(self, option, value):
+    def _set(self, option, value):
         return self._settings.set(self._app_id, option, value)
 
-    def __remove(self, option):
+    def _remove(self, option):
         return self._settings.remove_option(self._app_id, option)

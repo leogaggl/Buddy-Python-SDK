@@ -23,16 +23,16 @@ class TestBase(TestCase):
         settings.set_user({"id": "bad", "accessToken": "bad user token", "accessTokenExpires": self.past_javascript_access_token_expires()})
 
     def future_javascript_access_token_expires(self):
-        return self.__javascript_access_token_expires(1)
+        return self._javascript_access_token_expires(1)
 
     def past_javascript_access_token_expires(self):
-        return self.__javascript_access_token_expires(-1)
+        return self._javascript_access_token_expires(-1)
 
-    def __javascript_access_token_expires(self, days):
+    def _javascript_access_token_expires(self, days):
         delta = datetime.now(timezone.utc) + timedelta(days)
-        return self.__javascript_access_token_expires_string(delta)
+        return self._javascript_access_token_expires_string(delta)
 
-    def __javascript_access_token_expires_string(self, python_datetime):
+    def _javascript_access_token_expires_string(self, python_datetime):
         return "/Date(" + str(round(self.ticks_from_timestamp(python_datetime.timestamp()))) + ")/"
 
     def ticks_from_timestamp(self, timestamp):
