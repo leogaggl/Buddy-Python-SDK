@@ -1,6 +1,7 @@
-﻿from events import Events
-import platform
+﻿import platform
 import requests
+from events import Events
+
 from threading import Thread
 from connection import Connection
 from settings import Settings
@@ -22,7 +23,7 @@ class BuddyClient(object):
         self._service_exception = Events()
         self._authentication_needed = Events()
         self._connection_changed = Events()
-        self._connection_retry = Thread(target=self._connection_retry)
+        self._connection_retry = Thread(target=self._connection_retry_method)
         self._connection_level = Connection.On
 
     @property
@@ -64,15 +65,14 @@ class BuddyClient(object):
         return self._settings.access_token_string
 
     def _register_device(self):
-        response = self._handle_dictionary_request(requests.post, "/devices",
-            {
-                "appId": self.app_id,
-                "appKey": self.app_key,
-                "platform": self._get_platform(),
-                "model": self._get_model(),
-                "osVersion": self._get_os_version(),
-                "uniqueId": self._get_unique_id(),
-            })
+        response = self._handle_dictionary_request(requests.post, "/devices", {
+            "appId": self.app_id,
+            "appKey": self.app_key,
+            "platform": self._get_platform(),
+            "model": self._get_model(),
+            "osVersion": self._get_os_version(),
+            "uniqueId": self._get_unique_id(),
+        })
 
         self._settings.set_device_token(response[BuddyClient.result])
 
@@ -121,28 +121,26 @@ class BuddyClient(object):
         return self._handle_dictionary_request(self._session.put, path, dictionary)
 
     def create_user(self, user_name, password, first_name=None, last_name=None, email=None, gender=None, date_of_birth=None, tag=None):
-        response = self._handle_dictionary_request(self._session.post, "/users",
-            {
-                "username": user_name,
-                "password": password,
-                "firstName": first_name,
-                "lastName": last_name,
-                "email": email,
-                "gender": gender,
-                "dateOfBirth": date_of_birth,
-                "tag": tag
-            })
+        response = self._handle_dictionary_request(self._session.post, "/users", {
+            "username": user_name,
+            "password": password,
+            "firstName": first_name,
+            "lastName": last_name,
+            "email": email,
+            "gender": gender,
+            "dateOfBirth": date_of_birth,
+            "tag": tag
+        })
 
         self._settings.set_user(response[BuddyClient.result])
 
         return response
 
     def login_user(self, user_name, password):
-        response = self._handle_dictionary_request(self._session.post, "/users/login",
-            {
-                "username": user_name,
-                "password": password,
-            })
+        response = self._handle_dictionary_request(self._session.post, "/users/login", {
+            "username": user_name,
+            "password": password,
+        })
 
         self._settings.set_user(response[BuddyClient.result])
 
@@ -191,7 +189,7 @@ class BuddyClient(object):
         if not self._connection_retry.isAlive():
             self._connection_retry.start()
 
-    def _connection_retry(self):
+    def _connection_retry_method(self):
         successful = False
 
         try:

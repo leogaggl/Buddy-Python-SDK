@@ -1,11 +1,11 @@
-import unittest
-from uuid import uuid4
 import time
+from uuid import uuid4
+import unittest
+from unittest.mock import patch
 
 from buddy import Buddy
 from settings import Settings
 from test_base import TestBase
-from unittest.mock import patch
 
 
 class Test_test7(TestBase):
@@ -75,6 +75,7 @@ class Test_test7(TestBase):
         test_password = "testpassword"
         Buddy.create_user(test_user, test_password)
 
+        # to run in Python Tools for VS, change to "tests\Buddy Logo.png"
         response = Buddy.post("/pictures", {}, file=(open("Buddy Logo.png", "rb"), "image/png"))
         self.assertIsNotNone(response)
         self.assertIsNotNone(response["result"]["signedUrl"])

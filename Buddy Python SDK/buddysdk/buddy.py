@@ -8,27 +8,27 @@ class BuddyProperties(type):
 
     @property
     def current_user_id(cls):
-        return Buddy.current_client.current_user_id
+        return Buddy._current_client.current_user_id
 
     @property
     def last_location(cls):
-        return Buddy.current_client.last_location
+        return Buddy._current_client.last_location
 
     @last_location.setter
     def last_location(cls, value):
-    		Buddy.current_client.last_location = value
+        Buddy._current_client.last_location = value
 
     @property
     def service_exception(cls):
-        return Buddy.current_client.service_exception
+        return Buddy._current_client.service_exception
 
     @property
     def authentication_needed(cls):
-        return Buddy.current_client.authentication_needed
+        return Buddy._current_client.authentication_needed
 
     @property
     def connection_changed(cls):
-        return Buddy.current_client.connection_changed
+        return Buddy._current_client.connection_changed
 
 
 class Buddy(object, metaclass=BuddyProperties):
@@ -72,11 +72,11 @@ class Buddy(object, metaclass=BuddyProperties):
 
     @staticmethod
     def create_user(user_name, password, first_name=None, last_name=None, email=None, gender=None, date_of_birth=None, tag=None):
-       return Buddy.current_client.create_user(user_name, password, first_name, last_name, email, gender, date_of_birth, tag)
+        return Buddy.current_client.create_user(user_name, password, first_name, last_name, email, gender, date_of_birth, tag)
 
     @staticmethod
     def login_user(user_name, password):
-       return Buddy.current_client.login_user(user_name, password)
+        return Buddy.current_client.login_user(user_name, password)
 
     @staticmethod
     def logout_user():

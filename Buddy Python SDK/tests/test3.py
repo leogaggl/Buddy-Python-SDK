@@ -9,7 +9,7 @@ from access_token import AccessToken
 
 
 class Test_test3(TestBase):
-   
+
     _app_id = "a"
     _default_service_root = "https://api.buddyplatform.com"
     _service_root = "sr"
@@ -17,7 +17,7 @@ class Test_test3(TestBase):
 
     def test_Settings_empty(self):
         settings = Settings(Test_test3._app_id)
-        at = settings.access_token_string;
+        at = settings.access_token_string
         self.assertEqual(at, None)
         self.assertEqual(settings.service_root, Test_test3._default_service_root)
 

@@ -1,6 +1,6 @@
-﻿import builtins
-import unittest
+﻿import unittest
 from unittest.mock import patch
+
 from buddy import Buddy
 from buddy_client import BuddyClient
 from settings import Settings
@@ -35,6 +35,8 @@ class Test_test4(TestBase):
     @patch.object(BuddyClient, "_handle_dictionary_request")
     def test_hardware_info(self, handle_dictionary_request_mock):
         handle_dictionary_request_mock.return_value = {BuddyClient.result: None}
+        
+        # to run in Python Tools for VS, change to "tests\cpuinfo"
         BuddyClient._hardware_info_file = "cpuinfo"
 
         client = Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_hardware_info")

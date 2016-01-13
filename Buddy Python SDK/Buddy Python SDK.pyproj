@@ -7,8 +7,7 @@
     <ProjectHome>
     </ProjectHome>
     <StartupFile>buddysdk\__init__.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>buddysdk\;tests\</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Buddy Python SDK</Name>
@@ -24,16 +23,14 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="buddysdk\Buddy.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="buddysdk\Settings.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="buddysdk\access_token.py" />
+    <Compile Include="buddysdk\buddy.py" />
+    <Compile Include="buddysdk\buddy_client.py" />
+    <Compile Include="buddysdk\connection.py" />
+    <Compile Include="buddysdk\settings.py" />
     <Compile Include="buddysdk\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="buddysdk\BuddyClient.py" />
     <Compile Include="tests\test1.py">
       <SubType>Code</SubType>
     </Compile>
@@ -49,13 +46,18 @@
     <Compile Include="tests\test5.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tests\TestBase.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="tests\test6.py" />
+    <Compile Include="tests\test7.py" />
+    <Compile Include="tests\test_base.py" />
+    <Compile Include="tests\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="buddysdk\" />
     <Folder Include="tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tests\Buddy Logo.png" />
+    <Content Include="tests\cpuinfo" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

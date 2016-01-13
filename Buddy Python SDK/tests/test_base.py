@@ -3,10 +3,10 @@ from datetime import timezone
 from datetime import timedelta
 from unittest import TestCase
 import os
-from settings import Settings
+
 
 class TestBase(TestCase):
- 
+
     US_app_id = "bbbbbc.xgjbvPdwkllw"
     US_app_key = "1E9E824E-A3F1-4F34-B4F4-9CC87471A564"
     EU_app_id = "bbbbbc.gfnGlNfJFvFP"
