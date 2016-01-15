@@ -1,30 +1,29 @@
+import mock
 import time
-from uuid import uuid4
 import unittest
-from unittest.mock import patch
 
-from buddy import Buddy
+import buddy
 from settings import Settings
 from test_base import TestBase
 
 
 class Test_test7(TestBase):
 
-    @patch('buddy_client.Settings')
+    @mock.patch('buddy_client.Settings')
     def test_create_user(self, settings_mock):
         settings_mock.return_value = Settings(TestBase.US_app_id)
 
         self.setup_with_bad_tokens(settings_mock.return_value)
 
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_create_user")
+        buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_create_user")
 
-        users = Buddy.get("/users")
+        users = buddy.get("/users")
         self.assertIsNotNone(users)
 
         device_token = settings_mock.return_value.access_token_string
         self.assertIsNotNone(device_token)
 
-        user_response = Buddy.create_user("testuser" + str(uuid4()), "testpassword")
+        user_response = self.create_test_user()
         self.assertIsNotNone(user_response)
 
         user_token = settings_mock.return_value.access_token_string
@@ -32,29 +31,28 @@ class Test_test7(TestBase):
 
         self.assertNotEqual(device_token, user_token)
 
-        self.assertEqual(Buddy.current_user_id, user_response["result"]["id"])
+        self.assertEqual(buddy.current_user_id, user_response["result"]["id"])
 
-    @patch('buddy_client.Settings')
+    @mock.patch('buddy_client.Settings')
     def test_create_logout_login_user(self, settings_mock):
         settings_mock.return_value = Settings(TestBase.US_app_id)
 
         self.setup_with_bad_tokens(settings_mock.return_value)
 
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_create_logout_login_user")
+        buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_create_logout_login_user")
 
-        users_response = Buddy.get("/users")
+        users_response = buddy.get("/users")
         self.assertIsNotNone(users_response)
 
         device_token = settings_mock.return_value.access_token_string
 
-        test_user = "testuser" + str(uuid4())
-        test_password = "testpassword"
-        user1_response = Buddy.create_user(test_user, test_password)
+        user_name = self.get_test_user_name()
+        user1_response = self.create_test_user(user_name)
         self.assertIsNotNone(user1_response)
 
         user_token = settings_mock.return_value.access_token_string
 
-        Buddy.logout_user()
+        buddy.logout_user()
 
         device_token_2 = settings_mock.return_value.access_token_string
 
@@ -62,49 +60,45 @@ class Test_test7(TestBase):
         self.assertNotEqual(device_token, user_token)
         self.assertNotEqual(device_token_2, user_token)
 
-        user2_response = Buddy.login_user(test_user, test_password)
+        user2_response = buddy.login_user(user_name, self.get_test_user_password())
         self.assertIsNotNone(user2_response)
 
         self.assertEqual(user1_response["result"]["id"], user2_response["result"]["id"])
-        self.assertEqual(Buddy.current_user_id, user2_response["result"]["id"])
+        self.assertEqual(buddy.current_user_id, user2_response["result"]["id"])
 
     def test_upload_pic(self):
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_upload_pic")
+        buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_upload_pic")
 
-        test_user = "testuser" + str(uuid4())
-        test_password = "testpassword"
-        Buddy.create_user(test_user, test_password)
+        self.create_test_user()
 
         # to run in Python Tools for VS, change to "tests\Buddy Logo.png"
-        response = Buddy.post("/pictures", {}, file=(open("Buddy Logo.png", "rb"), "image/png"))
+        response = buddy.post("/pictures", {}, file=(open("Buddy Logo.png", "rb"), "image/png"))
         self.assertIsNotNone(response)
         self.assertIsNotNone(response["result"]["signedUrl"])
 
-    @patch('buddy_client.Settings')
+    @mock.patch('buddy_client.Settings')
     def test_auth_error(self, settings_mock):
         settings_mock.return_value = Settings(TestBase.US_app_id)
         self.setup_with_bad_tokens(settings_mock.return_value)
 
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_auth_error")
+        buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_auth_error")
 
-        response = Buddy.get("/pictures")
+        response = buddy.get("/pictures")
         self.assertIsNotNone(response)
         self.assertEqual(response["status"], 403)
 
     def test_auth(self):
-        Buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_auth")
+        buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_auth")
 
         logger = AuthLogger()
 
-        test_user = "testuser" + str(uuid4())
-        test_password = "testpassword"
-        Buddy.create_user(test_user, test_password)
+        self.create_test_user()
 
-        Buddy.logout_user()
+        buddy.logout_user()
 
-        Buddy.authentication_needed.on_change += logger.log
+        buddy.authentication_needed.on_change += logger.log
 
-        Buddy.get("/pictures", {})
+        buddy.get("/pictures", {})
 
         while logger.authorized is not True:
             time.sleep(2)

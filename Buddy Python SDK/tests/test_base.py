@@ -1,8 +1,12 @@
 ﻿from datetime import datetime
-from datetime import timezone
 from datetime import timedelta
-from unittest import TestCase
+from dateutil.tz import tzutc
 import os
+from uuid import uuid4
+from unittest import TestCase
+
+import buddy
+from settings import Settings
 
 
 class TestBase(TestCase):
@@ -14,7 +18,7 @@ class TestBase(TestCase):
 
     def setUp(self):
         try:
-            os.remove("buddy.cfg")
+            os.remove(Settings.buddy_cfg)
         finally:
             return
 
@@ -28,12 +32,31 @@ class TestBase(TestCase):
     def past_javascript_access_token_expires(self):
         return self._javascript_access_token_expires(-1)
 
+    def datetime_from_days(self, days):
+        return datetime.now(tzutc()) + timedelta(days=days)
+
     def _javascript_access_token_expires(self, days):
-        delta = datetime.now(timezone.utc) + timedelta(days)
-        return self._javascript_access_token_expires_string(delta)
+        utc_now_plus_days = self.datetime_from_days(days)
+
+        return self._javascript_access_token_expires_string(utc_now_plus_days)
 
     def _javascript_access_token_expires_string(self, python_datetime):
-        return "/Date(" + str(round(self.ticks_from_timestamp(python_datetime.timestamp()))) + ")/"
+        return "/Date(" + str(self.ticks_from_datetime(python_datetime)) + ")/"
 
-    def ticks_from_timestamp(self, timestamp):
-        return timestamp * 1000
+    def ticks_from_datetime(self, python_datetime):
+        return self._ticks_from_timestamp(self._total_seconds_from_datetime(python_datetime))
+
+    def _total_seconds_from_datetime(self, python_datetime):
+        return (python_datetime - datetime(1970, 1, 1, tzinfo=tzutc())).total_seconds() / timedelta(seconds=1).total_seconds()
+
+    def _ticks_from_timestamp(self, timestamp):
+        return round(timestamp*1000).as_integer_ratio()[0]
+
+    def create_test_user(self, user_name=None):
+        return buddy.create_user(self.get_test_user_name() if user_name is None else user_name, self.get_test_user_password())
+
+    def get_test_user_name(self):
+        return "testuser" + str(uuid4())
+
+    def get_test_user_password(self):
+        return "testpassword"

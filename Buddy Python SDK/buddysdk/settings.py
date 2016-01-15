@@ -1,7 +1,9 @@
 ﻿import configparser
 import re
 import os
+
 from access_token import AccessToken
+
 
 class Settings(object):
     _service_root = "service_root"
@@ -9,7 +11,7 @@ class Settings(object):
     _user_token = "user"
     _user_id = "user_id"
     _default_service_root = "https://api.buddyplatform.com"
-    _buddy_cfg = "buddy.cfg"
+    buddy_cfg = "buddy.cfg"
     _access_token_key = "_access_token"
     _access_token_expires_key = "_access_token_expires"
 
@@ -17,8 +19,8 @@ class Settings(object):
         self._app_id = app_id
 
         self._settings = configparser.ConfigParser()
-        if os.path.isfile(Settings._buddy_cfg):
-            with open(Settings._buddy_cfg, "r") as configfile:
+        if os.path.isfile(Settings.buddy_cfg):
+            with open(Settings.buddy_cfg, "r") as configfile:
                 self._settings.read_file(configfile)
 
         if not self._settings.has_section(self._app_id):
@@ -88,7 +90,7 @@ class Settings(object):
         self._save()
 
     def _save(self):
-        with open(Settings._buddy_cfg, "w") as configfile:
+        with open(Settings.buddy_cfg, "w") as configfile:
             self._settings.write(configfile)
 
     def _get(self, option):

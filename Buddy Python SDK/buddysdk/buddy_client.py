@@ -1,8 +1,8 @@
-﻿import platform
+﻿from events import Events
+import platform
 import requests
-from events import Events
-
 from threading import Thread
+
 from connection import Connection
 from settings import Settings
 
@@ -24,7 +24,7 @@ class BuddyClient(object):
         self._authentication_needed = Events()
         self._connection_changed = Events()
         self._connection_retry = Thread(target=self._connection_retry_method)
-        self._connection_level = Connection.On
+        self._connection_level = Connection.on
 
     @property
     def app_id(self):
@@ -150,12 +150,16 @@ class BuddyClient(object):
         self._settings.set_user(None)
 
     def _handle_parameters_request(self, verb, path, parameters=None):
+        self._handle_last_location(parameters)
+
         def closure():
             return verb(self._settings.service_root + path, params=parameters)
 
         return self._handle_request(closure)
 
     def _handle_dictionary_request(self, verb, path, dictionary, file=None):
+        self._handle_last_location(dictionary)
+
         def closure():
             if file is None:
                 return verb(self._settings.service_root + path, json=dictionary)
@@ -163,6 +167,10 @@ class BuddyClient(object):
                 return verb(self._settings.service_root + path, json=dictionary, files={"data": ("data",) + file})
 
         return self._handle_request(closure)
+
+    def _handle_last_location(self, dict):
+        if self.last_location is not None and dict is not None:
+            dict["location"] = self.last_location
 
     def _handle_request(self, closure):
         response = None
@@ -184,7 +192,7 @@ class BuddyClient(object):
             return response.json()
 
     def _handle_connection_exception(self):
-        self._set_connection_level(Connection.Off)
+        self._set_connection_level(Connection.off)
 
         if not self._connection_retry.isAlive():
             self._connection_retry.start()
@@ -201,7 +209,7 @@ class BuddyClient(object):
                 else:
                     successful = True
         finally:
-            self._set_connection_level(Connection.On)
+            self._set_connection_level(Connection.on)
 
     def _set_connection_level(self, connection_level):
         if self._connection_level is not connection_level:

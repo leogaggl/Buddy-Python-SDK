@@ -1,11 +1,8 @@
-﻿from datetime import datetime
-from datetime import timezone
-from datetime import timedelta
-import unittest
+﻿import unittest
 
+from access_token import AccessToken
 from settings import Settings
 from test_base import TestBase
-from access_token import AccessToken
 
 
 class Test_test3(TestBase):
@@ -22,17 +19,16 @@ class Test_test3(TestBase):
         self.assertEqual(settings.service_root, Test_test3._default_service_root)
 
     def test_access_token(self):
-        future = datetime.now(timezone.utc) + timedelta(1)
-        at = self.access_token_base(future)
-        self.assertEqual(at.token, Test_test3._access_token)
+        future = self.access_token_base(1)
+        self.assertEqual(future.token, Test_test3._access_token)
 
     def test_access_token_expired(self):
-        past = datetime.now(timezone.utc) - timedelta(1)
-        at = self.access_token_base(past)
-        self.assertEqual(at.token, None)
+        past = self.access_token_base(-1)
+        self.assertEqual(past.token, None)
 
-    def access_token_base(self, time):
-        at = AccessToken([Test_test3._access_token, str(self.ticks_from_timestamp(time.timestamp()))])
+    def access_token_base(self, days):
+        datetime = self.datetime_from_days(days)
+        at = AccessToken([Test_test3._access_token, str(self.ticks_from_datetime(datetime))])
         return at
 
     def test_Settings_access_token(self):
