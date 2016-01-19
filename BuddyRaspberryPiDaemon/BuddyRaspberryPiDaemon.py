@@ -6,11 +6,11 @@ from RPi import GPIO
 GPIO.VERBOSE = False
 
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
-channel_list = [11, 12]
+channel_list = [4]
 
-GPIO.setup(channel_list, GPIO.IN)
+GPIO.setup(channel_list, GPIO.IN, GPIO.PUD_DOWN)
 
 sys.path.append("../Buddy Python SDK")
 sys.path.append("../Buddy Python SDK/buddysdk")
@@ -30,13 +30,14 @@ while c.input() is None:
 
     data = {"pins": dict(zip(channel_list, outputs))}
 
+    print "GPIO status: " + str(data) + "\r"
+
     response = buddy.post("/telemetry/RaspberryPi", {"data": data})
 
-    print("Telemetry response: " + str(response))
+    print "Telemetry response: " + str(response)  + "\r"
 
     time.sleep(2)
 
 GPIO.cleanup(channel_list)
 
 c.cleanup()
-
