@@ -8,8 +8,8 @@ from settings import Settings
 
 
 class BuddyClient(object):
-    result = "result"
-    _hardware_info_file = "/proc/cpuinfo"
+    result_name = "result"
+    _hardware_info_file_name = "/proc/cpuinfo"
 
     def __init__(self, app_id, app_key):
         self._app_id = app_id
@@ -23,7 +23,7 @@ class BuddyClient(object):
         self._service_exception = Events()
         self._authentication_needed = Events()
         self._connection_changed = Events()
-        self._connection_retry = Thread(target=self._connection_retry_method)
+        self._connection_retry = Thread(target=self.__connection_retry_method)
         self._connection_level = Connection.on
 
     @property
@@ -60,68 +60,73 @@ class BuddyClient(object):
 
     def get_access_token_string(self):
         if self._settings.access_token_string is None:
-            self._register_device()
+            self.__register_device()
 
         return self._settings.access_token_string
 
-    def _register_device(self):
-        response = self._handle_dictionary_request(requests.post, "/devices", {
+    def __register_device(self):
+        response = self.__handle_dictionary_request(requests.post, "/devices", {
             "appId": self.app_id,
             "appKey": self.app_key,
-            "platform": self._get_platform(),
-            "model": self._get_model(),
-            "osVersion": self._get_os_version(),
-            "uniqueId": self._get_unique_id(),
+            "platform": BuddyClient.__get_platform(),
+            "model": BuddyClient.__get_model(),
+            "osVersion": BuddyClient.__get_os_version(),
+            "uniqueId": BuddyClient.__get_unique_id(),
         })
 
-        self._settings.set_device_token(response[BuddyClient.result])
+        self._settings.set_device_token(response[BuddyClient.result_name])
 
-    def _get_platform(self):
+    @staticmethod
+    def __get_platform():
         return "Raspberry Pi"
 
-    def _get_model(self):
-        hardware = self._get_cpuinfo("Hardware")
-        revision = self._get_cpuinfo("Revision")
+    @staticmethod
+    def __get_model():
+        hardware = BuddyClient.__get_cpuinfo("Hardware")
+        revision = BuddyClient.__get_cpuinfo("Revision")
         if hardware is None:
-            return "Raspberry Pi"
+            return "Hardware info not available"
         else:
             return hardware + "-" + revision
 
-    def _get_os_version(self):
+    @staticmethod
+    def __get_os_version():
         return platform.release()
 
-    def _get_unique_id(self):
-        unique_id = self._get_cpuinfo("Serial")
+    @staticmethod
+    def __get_unique_id():
+        unique_id = BuddyClient.__get_cpuinfo("Serial")
         if unique_id is None:
             unique_id = "ERROR000000000"
         return unique_id
 
-    def _get_cpuinfo(self, key):
+    @staticmethod
+    def __get_cpuinfo(key):
         try:
-            with open(BuddyClient._hardware_info_file, "r") as file:
-                for line in file:
+            with open(BuddyClient._hardware_info_file_name, "r") as hardware_file:
+                for line in hardware_file:
                     if line.startswith(key):
                         return line.splitlines()[0].split(": ")[1]
         except:
             return None
 
     def get(self, path, parameters):
-        return self._handle_parameters_request(self._session.get, path, parameters)
+        return self.__handle_parameters_request(self._session.get, path, parameters)
 
     def delete(self, path, parameters):
-        return self._handle_parameters_request(self._session.delete, path, parameters)
+        return self.__handle_parameters_request(self._session.delete, path, parameters)
 
     def patch(self, path, dictionary):
-        return self._handle_dictionary_request(self._session.patch, path, dictionary)
+        return self.__handle_dictionary_request(self._session.patch, path, dictionary)
 
     def post(self, path, dictionary, file=None):
-        return self._handle_dictionary_request(self._session.post, path, dictionary, file)
+        return self.__handle_dictionary_request(self._session.post, path, dictionary, file)
 
     def put(self, path, dictionary):
-        return self._handle_dictionary_request(self._session.put, path, dictionary)
+        return self.__handle_dictionary_request(self._session.put, path, dictionary)
 
     def create_user(self, user_name, password, first_name=None, last_name=None, email=None, gender=None, date_of_birth=None, tag=None):
-        response = self._handle_dictionary_request(self._session.post, "/users", {
+        response = self.__handle_dictionary_request(self._session.post, "/users", {
             "username": user_name,
             "password": password,
             "firstName": first_name,
@@ -132,33 +137,33 @@ class BuddyClient(object):
             "tag": tag
         })
 
-        self._settings.set_user(response[BuddyClient.result])
+        self._settings.set_user(response[BuddyClient.result_name])
 
         return response
 
     def login_user(self, user_name, password):
-        response = self._handle_dictionary_request(self._session.post, "/users/login", {
+        response = self.__handle_dictionary_request(self._session.post, "/users/login", {
             "username": user_name,
             "password": password,
         })
 
-        self._settings.set_user(response[BuddyClient.result])
+        self._settings.set_user(response[BuddyClient.result_name])
 
         return response
 
     def logout_user(self):
         self._settings.set_user(None)
 
-    def _handle_parameters_request(self, verb, path, parameters=None):
-        self._handle_last_location(parameters)
+    def __handle_parameters_request(self, verb, path, parameters=None):
+        self.__handle_last_location(parameters)
 
         def closure():
             return verb(self._settings.service_root + path, params=parameters)
 
-        return self._handle_request(closure)
+        return self.__handle_request(closure)
 
-    def _handle_dictionary_request(self, verb, path, dictionary, file=None):
-        self._handle_last_location(dictionary)
+    def __handle_dictionary_request(self, verb, path, dictionary, file=None):
+        self.__handle_last_location(dictionary)
 
         def closure():
             if file is None:
@@ -166,23 +171,23 @@ class BuddyClient(object):
             else:
                 return verb(self._settings.service_root + path, json=dictionary, files={"data": ("data",) + file})
 
-        return self._handle_request(closure)
+        return self.__handle_request(closure)
 
-    def _handle_last_location(self, dict):
-        if self.last_location is not None and dict is not None:
-            dict["location"] = self.last_location
+    def __handle_last_location(self, dictionary):
+        if self.last_location is not None and dictionary is not None:
+            dictionary["location"] = self.last_location
 
-    def _handle_request(self, closure):
+    def __handle_request(self, closure):
         response = None
 
         try:
             response = closure()
         except requests.RequestException:
-            self._handle_connection_exception()
+            self.__handle_connection_exception()
         finally:
-            return self._handle_response(response)
+            return self.__handle_response(response)
 
-    def _handle_response(self, response):
+    def __handle_response(self, response):
         if response is None:
             return None
         else:
@@ -191,13 +196,13 @@ class BuddyClient(object):
 
             return response.json()
 
-    def _handle_connection_exception(self):
-        self._set_connection_level(Connection.off)
+    def __handle_connection_exception(self):
+        self.__set_connection_level(Connection.off)
 
         if not self._connection_retry.isAlive():
             self._connection_retry.start()
 
-    def _connection_retry_method(self):
+    def __connection_retry_method(self):
         successful = False
 
         try:
@@ -209,9 +214,9 @@ class BuddyClient(object):
                 else:
                     successful = True
         finally:
-            self._set_connection_level(Connection.on)
+            self.__set_connection_level(Connection.on)
 
-    def _set_connection_level(self, connection_level):
+    def __set_connection_level(self, connection_level):
         if self._connection_level is not connection_level:
             self._connection_level = connection_level
             self._connection_changed.on_change(self._connection_level)

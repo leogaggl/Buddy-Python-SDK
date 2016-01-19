@@ -8,7 +8,7 @@ from settings import Settings
 from test_base import TestBase
 
 
-class Test_test6(TestBase):
+class Test6(TestBase):
 
     # run with network off and a breakpoint at time.sleep
     def test_connection(self):

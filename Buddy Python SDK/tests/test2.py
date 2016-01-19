@@ -4,7 +4,7 @@ import buddy
 from test_base import TestBase
 
 
-class test_test2(TestBase):
+class Test2(TestBase):
     def test_buddy_init(self):
         client_a = buddy.init("a", "b")
         self.assertEqual(client_a.app_id, "a")

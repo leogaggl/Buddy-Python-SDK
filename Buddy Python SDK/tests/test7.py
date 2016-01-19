@@ -7,7 +7,7 @@ from settings import Settings
 from test_base import TestBase
 
 
-class Test_test7(TestBase):
+class Test7(TestBase):
 
     @mock.patch('buddy_client.Settings')
     def test_create_user(self, settings_mock):

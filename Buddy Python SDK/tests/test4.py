@@ -7,7 +7,7 @@ from settings import Settings
 from test_base import TestBase
 
 
-class Test_test4(TestBase):
+class Test4(TestBase):
 
     @mock.patch("buddy_client.Settings")
     def test_register_device_us(self, settings_mock):
@@ -32,12 +32,12 @@ class Test_test4(TestBase):
         test.assertEqual(access_token_string, settings.access_token_string)
         test.assertTrue(settings.service_root.startswith(service_root_starts_with))
 
-    @mock.patch.object(BuddyClient, "_handle_dictionary_request")
+    @mock.patch.object(BuddyClient, "_BuddyClient__handle_dictionary_request")
     def test_hardware_info(self, handle_dictionary_request_mock):
-        handle_dictionary_request_mock.return_value = {BuddyClient.result: None}
+        handle_dictionary_request_mock.return_value = {BuddyClient.result_name: None}
         
         # to run in Python Tools for VS, change to "tests\cpuinfo"
-        BuddyClient._hardware_info_file = "cpuinfo"
+        BuddyClient._hardware_info_file_name = "cpuinfo"
 
         client = buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_hardware_info")
 

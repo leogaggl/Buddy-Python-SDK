@@ -1,10 +1,17 @@
 ﻿import sys
 import time
 from curses_check_for_keypress import CheckForKeypress
-#import RPi.GPIO as GPIO
-from RPi import GPIO
-GPIO.VERBOSE = False
 
+# TODO: Make sure you are using the correct GPIO package.
+
+# The following import is used by the fakeRPiGPIO package, for testing outside of Raspberry Pi.
+# import RPi.GPIO as GPIO
+
+# The following import is used by the RPi.GPIO package, for testing on a Raspberry Pi.
+from RPi import GPIO
+
+
+GPIO.VERBOSE = False
 
 GPIO.setmode(GPIO.BCM)
 
@@ -17,7 +24,8 @@ sys.path.append("../Buddy Python SDK/buddysdk")
 
 from buddysdk import buddy
 
-buddy.init("bbbbbc.xgjbvPdwkllw", "1E9E824E-A3F1-4F34-B4F4-9CC87471A564")
+# TODO: Go to http://dev.buddyplatform.com to get an app ID and app key.
+buddy.init("<Your App ID>", "<Your App Key>")
 
 # A PUT must be done to configure your app's telemetry. See https://dev.buddyplatform.com/docs/IoT%20Telemetry#ConfigureTelemetry for more details.
 buddy.put("/telemetry/RaspberryPi", {})
@@ -34,7 +42,7 @@ while c.input() is None:
 
     response = buddy.post("/telemetry/RaspberryPi", {"data": data})
 
-    print "Telemetry response: " + str(response)  + "\r"
+    print "Telemetry response: " + str(response) + "\r"
 
     time.sleep(2)
 

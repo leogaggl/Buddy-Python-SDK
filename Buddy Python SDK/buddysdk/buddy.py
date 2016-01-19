@@ -1,4 +1,6 @@
-﻿from buddy_client import BuddyClient
+﻿import mprop
+
+from buddy_client import BuddyClient
 
 
 __clients = {}
@@ -86,4 +88,4 @@ def logout_user(module):
     __current_client.logout_user()
 
 
-import mprop; mprop.init()
+mprop.init()
