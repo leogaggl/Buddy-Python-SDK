@@ -175,7 +175,7 @@ class BuddyClient(object):
 
     def __handle_last_location(self, dictionary):
         if self.last_location is not None and dictionary is not None:
-            dictionary["location"] = self.last_location
+            dictionary["location"] = "%s, %s" % self.last_location
 
     def __handle_request(self, closure):
         response = None

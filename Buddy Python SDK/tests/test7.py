@@ -71,7 +71,7 @@ class Test7(TestBase):
 
         self.create_test_user()
 
-        # to run in Python Tools for VS, change to "tests\Buddy Logo.png"
+        # TODO: to run in Python Tools for VS, change to "tests\Buddy Logo.png"
         response = buddy.post("/pictures", {}, file=(open("Buddy Logo.png", "rb"), "image/png"))
         self.assertIsNotNone(response)
         self.assertIsNotNone(response["result"]["signedUrl"])
@@ -102,6 +102,25 @@ class Test7(TestBase):
 
         while logger.authorized is not True:
             time.sleep(2)
+
+    def test_last_location(self):
+        buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_last_location")
+
+        self.create_test_user()
+
+        location = (42.0, -42.0)
+        buddy.last_location = location
+
+        response = buddy.post("/checkins", {})
+        self.assertIsNotNone(response)
+        result = response["result"]
+        self.assertIsNotNone(result)
+
+        response = buddy.get("/checkins/" + result["id"])
+        self.assertIsNotNone(response)
+        result = response["result"]
+        self.assertIsNotNone(result)
+        self.assertEqual(result["location"], {u'lat': location[0], u'lng': location[1]})
 
 
 class AuthLogger(object):

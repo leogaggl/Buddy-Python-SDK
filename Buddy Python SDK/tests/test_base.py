@@ -11,10 +11,11 @@ from settings import Settings
 
 class TestBase(TestCase):
 
-    US_app_id = "bbbbbc.xgjbvPdwkllw"
-    US_app_key = "1E9E824E-A3F1-4F34-B4F4-9CC87471A564"
-    EU_app_id = "bbbbbc.gfnGlNfJFvFP"
-    EU_app_key = "76123a72-4d05-93db-f297-b8a7501fd2f7"
+    # TODO: Go to http://buddyplatform.com to get an app ID and app keys for US and EU apps.
+    US_app_id = "<Your US App ID>"
+    US_app_key = "<Your US App Key>4"
+    EU_app_id = "<Your EU App ID>"
+    EU_app_key = "<Your EU App Key>"
 
     def setUp(self):
         try:

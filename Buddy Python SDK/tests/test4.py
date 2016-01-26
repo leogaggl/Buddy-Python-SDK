@@ -36,7 +36,7 @@ class Test4(TestBase):
     def test_hardware_info(self, handle_dictionary_request_mock):
         handle_dictionary_request_mock.return_value = {BuddyClient.result_name: None}
         
-        # to run in Python Tools for VS, change to "tests\cpuinfo"
+        # TODO: to run in Python Tools for VS, change to "tests\cpuinfo"
         BuddyClient._hardware_info_file_name = "cpuinfo"
 
         client = buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_hardware_info")

@@ -10,7 +10,7 @@ from test_base import TestBase
 
 class Test6(TestBase):
 
-    # run with network off and a breakpoint at time.sleep
+    # TODO: run with network off and a breakpoint at time.sleep
     def test_connection(self):
         buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_connection")
 
@@ -48,7 +48,7 @@ class Test6(TestBase):
 
 class ConnectionLogger(object):
     def __init__(self):
-        self.connection = Connection.on # switch to None when debugging test_connection
+        self.connection = Connection.on # TODO: switch to None when debugging test_connection
 
     def log(self, connection):
         logging.info("connection_changed.log: " + str(connection.value))
