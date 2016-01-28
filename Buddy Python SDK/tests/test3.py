@@ -1,6 +1,8 @@
-﻿import unittest
+﻿import uuid
+import unittest
 
 from access_token import AccessToken
+from buddy_client import BuddyClient
 from settings import Settings
 from test_base import TestBase
 
@@ -62,6 +64,13 @@ class Test3(TestBase):
 
         self.assertEqual(settings.access_token_string, Test3._access_token)
         self.assertEqual(settings.service_root, Test3._service_root)
+
+    def test_Settings_generated_unique_id(self):
+
+        settings = Settings(Test3._app_id)
+
+        self.assertIsNotNone(settings.unique_id)
+        self.assertEqual(settings.unique_id, str(uuid.getnode()))
 
 
 if __name__ == '__main__':

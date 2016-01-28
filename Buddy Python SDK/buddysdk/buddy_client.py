@@ -1,6 +1,7 @@
 ﻿from events import Events
 import platform
 import requests
+import sys
 from threading import Thread
 
 from connection import Connection
@@ -71,14 +72,14 @@ class BuddyClient(object):
             "platform": BuddyClient.__get_platform(),
             "model": BuddyClient.__get_model(),
             "osVersion": BuddyClient.__get_os_version(),
-            "uniqueId": BuddyClient.__get_unique_id(),
+            "uniqueId": self.__get_unique_id(),
         })
 
         self._settings.set_device_token(response[BuddyClient.result_name])
 
     @staticmethod
     def __get_platform():
-        return "Raspberry Pi"
+        return sys.platform
 
     @staticmethod
     def __get_model():
@@ -93,11 +94,10 @@ class BuddyClient(object):
     def __get_os_version():
         return platform.release()
 
-    @staticmethod
-    def __get_unique_id():
+    def __get_unique_id(self):
         unique_id = BuddyClient.__get_cpuinfo("Serial")
         if unique_id is None:
-            unique_id = "ERROR000000000"
+            unique_id = self._settings.unique_id
         return unique_id
 
     @staticmethod

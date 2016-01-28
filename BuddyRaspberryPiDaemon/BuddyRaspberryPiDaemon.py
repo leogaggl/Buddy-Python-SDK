@@ -27,7 +27,7 @@ from buddysdk import buddy
 # TODO: Go to http://buddyplatform.com to get an app ID and app key.
 buddy.init("<Your App ID>", "<Your App Key>")
 
-# A PUT must be done to configure your app's telemetry. See https://dev.buddyplatform.com/docs/IoT%20Telemetry#ConfigureTelemetry for more details.
+# An initial PUT must be done to configure your app's telemetry. See https://dev.buddyplatform.com/docs/IoT%20Telemetry#ConfigureTelemetry for more details.
 buddy.put("/telemetry/RaspberryPi", {})
 
 c = CheckForKeypress('Buddy Raspberry Pi SDK Sample', test_mode=True)

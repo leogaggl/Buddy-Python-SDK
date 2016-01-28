@@ -13,7 +13,7 @@ class TestBase(TestCase):
 
     # TODO: Go to http://buddyplatform.com to get an app ID and app keys for US and EU apps.
     US_app_id = "<Your US App ID>"
-    US_app_key = "<Your US App Key>4"
+    US_app_key = "<Your US App Key>"
     EU_app_id = "<Your EU App ID>"
     EU_app_key = "<Your EU App Key>"
 
