@@ -98,8 +98,9 @@ class Test7(TestBase):
 
         buddy.authentication_needed.on_change += logger.log
 
-        buddy.get("/pictures", {})
-
+        response = buddy.get("/pictures", {})
+        self.assertIsNotNone(response)
+        
         while logger.authorized is not True:
             time.sleep(2)
 

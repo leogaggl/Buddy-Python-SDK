@@ -3,6 +3,7 @@ import platform
 import requests
 import sys
 from threading import Thread
+import uuid
 
 from connection import Connection
 from settings import Settings
@@ -75,7 +76,8 @@ class BuddyClient(object):
             "uniqueId": self.__get_unique_id(),
         })
 
-        self._settings.set_device_token(response[BuddyClient.result_name])
+        if response is not None:
+            self._settings.set_device_token(response[BuddyClient.result_name])
 
     @staticmethod
     def __get_platform():
@@ -97,7 +99,7 @@ class BuddyClient(object):
     def __get_unique_id(self):
         unique_id = BuddyClient.__get_cpuinfo("Serial")
         if unique_id is None:
-            unique_id = self._settings.unique_id
+            unique_id = uuid.getnode()
         return unique_id
 
     @staticmethod
@@ -137,7 +139,8 @@ class BuddyClient(object):
             "tag": tag
         })
 
-        self._settings.set_user(response[BuddyClient.result_name])
+        if response is not None:
+            self._settings.set_user(response[BuddyClient.result_name])
 
         return response
 
@@ -147,7 +150,8 @@ class BuddyClient(object):
             "password": password,
         })
 
-        self._settings.set_user(response[BuddyClient.result_name])
+        if response is not None:
+            self._settings.set_user(response[BuddyClient.result_name])
 
         return response
 
