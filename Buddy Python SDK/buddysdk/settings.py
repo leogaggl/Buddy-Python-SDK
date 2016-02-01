@@ -1,7 +1,6 @@
 ﻿import configparser
 import re
 import os
-import uuid
 
 from access_token import AccessToken
 
@@ -81,15 +80,6 @@ class Settings(object):
     @property
     def user_id(self):
         return self.__get(Settings._user_id_name)
-
-    @property
-    def unique_id(self):
-        unique_id = self.__get(Settings._unique_id_name)
-        if unique_id is None:
-            unique_id = str(uuid.getnode())
-            self.__set(Settings._unique_id_name, unique_id)
-            self.__save()
-        return unique_id
 
     def set_user(self, result):
         self.__set_access_token(Settings._user_token_name, result)
