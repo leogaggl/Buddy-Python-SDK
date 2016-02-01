@@ -100,7 +100,7 @@ class Test7(TestBase):
 
         response = buddy.get("/pictures", {})
         self.assertIsNotNone(response)
-        
+
         while logger.authorized is not True:
             time.sleep(2)
 

@@ -34,7 +34,7 @@ class Test4(TestBase):
 
     @mock.patch.object(BuddyClient, "_BuddyClient__handle_dictionary_request")
     def test_hardware_info(self, handle_dictionary_request_mock):
-        handle_dictionary_request_mock.return_value = {BuddyClient.result_name: None}
+        handle_dictionary_request_mock.return_value = {BuddyClient.exception_name: Exception()}
         
         # TODO: to run in Python Tools for VS, change to "tests\cpuinfo"
         BuddyClient._hardware_info_file_name = "cpuinfo"

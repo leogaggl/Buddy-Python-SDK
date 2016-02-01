@@ -1,7 +1,6 @@
 ﻿import configparser
 import re
 import os
-import uuid
 
 from access_token import AccessToken
 

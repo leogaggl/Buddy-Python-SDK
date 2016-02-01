@@ -10,7 +10,8 @@ from settings import Settings
 
 
 class BuddyClient(object):
-    result_name = "result"
+    exception_name = u"exception"
+    _result_name = u"result"
     _hardware_info_file_name = "/proc/cpuinfo"
 
     def __init__(self, app_id, app_key):
@@ -76,8 +77,8 @@ class BuddyClient(object):
             "uniqueId": self.__get_unique_id(),
         })
 
-        if response is not None:
-            self._settings.set_device_token(response[BuddyClient.result_name])
+        if response[BuddyClient.exception_name] is None:
+            self._settings.set_device_token(response[BuddyClient._result_name])
 
     @staticmethod
     def __get_platform():
@@ -139,8 +140,8 @@ class BuddyClient(object):
             "tag": tag
         })
 
-        if response is not None:
-            self._settings.set_user(response[BuddyClient.result_name])
+        if response[BuddyClient.exception_name] is None:
+            self._settings.set_user(response[BuddyClient._result_name])
 
         return response
 
@@ -150,8 +151,8 @@ class BuddyClient(object):
             "password": password,
         })
 
-        if response is not None:
-            self._settings.set_user(response[BuddyClient.result_name])
+        if response[BuddyClient.exception_name] is None:
+            self._settings.set_user(response[BuddyClient._result_name])
 
         return response
 
@@ -186,25 +187,40 @@ class BuddyClient(object):
 
         try:
             response = closure()
-        except requests.RequestException:
-            self.__handle_connection_exception()
-        finally:
+        except requests.RequestException as exception:
+            return self.__handle_connection_exception(exception)
+        except Exception as exception:
+            return self.__handle_exception(exception)
+        else:
             return self.__handle_response(response)
 
-    def __handle_response(self, response):
-        if response is None:
-            return None
-        else:
-            if response.status_code == 401 or response.status_code == 403:
-                self._authentication_needed.on_change()
-
-            return response.json()
-
-    def __handle_connection_exception(self):
+    def __handle_connection_exception(self, exception):
         self.__set_connection_level(Connection.off)
 
         if not self._connection_retry.isAlive():
-            self._connection_retry.start()
+           self._connection_retry.start()
+
+        return self.__handle_exception(exception)
+
+    def __set_connection_level(self, connection_level):
+        if self._connection_level is not connection_level:
+            self._connection_level = connection_level
+            self._connection_changed.on_change(self._connection_level)
+
+    def __handle_exception(self, exception):
+        self._service_exception.on_change(exception)
+
+        return {BuddyClient.exception_name: exception}
+
+    def __handle_response(self, response):
+        if response.status_code == 401 or response.status_code == 403:
+            self._authentication_needed.on_change()
+
+        json_response = response.json()
+
+        json_response[BuddyClient.exception_name] = None
+
+        return json_response
 
     def __connection_retry_method(self):
         successful = False
@@ -219,11 +235,6 @@ class BuddyClient(object):
                     successful = True
         finally:
             self.__set_connection_level(Connection.on)
-
-    def __set_connection_level(self, connection_level):
-        if self._connection_level is not connection_level:
-            self._connection_level = connection_level
-            self._connection_changed.on_change(self._connection_level)
 
 
 class Auth(requests.auth.AuthBase):
