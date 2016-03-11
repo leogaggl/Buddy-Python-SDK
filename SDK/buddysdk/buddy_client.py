@@ -162,19 +162,19 @@ class BuddyClient(object):
     def __handle_parameters_request(self, verb, path, parameters=None):
         self.__handle_last_location(parameters)
 
-        def closure():
-            return verb(self._settings.service_root + path, params=parameters)
+        def closure(settings):
+            return verb(settings.service_root + path, params=parameters)
 
         return self.__handle_request(closure)
 
     def __handle_dictionary_request(self, verb, path, dictionary, file=None):
         self.__handle_last_location(dictionary)
 
-        def closure():
+        def closure(settings):
             if file is None:
-                return verb(self._settings.service_root + path, json=dictionary)
+                return verb(settings.service_root + path, json=dictionary)
             else:
-                return verb(self._settings.service_root + path, json=dictionary, files={"data": ("data",) + file})
+                return verb(settings.service_root + path, json=dictionary, files={"data": ("data",) + file})
 
         return self.__handle_request(closure)
 
@@ -186,7 +186,7 @@ class BuddyClient(object):
         response = None
 
         try:
-            response = closure()
+            response = closure(self._settings)
         except requests.RequestException as exception:
             return self.__handle_connection_exception(exception)
         except Exception as exception:
@@ -216,11 +216,16 @@ class BuddyClient(object):
         if response.status_code == 401 or response.status_code == 403:
             self._authentication_needed.on_change()
 
-        json_response = response.json()
+        if response.headers["Content-Type"] == "application/json":
+            response_dict = response.json()
+            exception = None
+        else:
+            response_dict = {"status": 500, "content": response.content}
+            exception = requests.HTTPError()
 
-        json_response[BuddyClient.exception_name] = None
+        response_dict[BuddyClient.exception_name] = exception
 
-        return json_response
+        return response_dict
 
     def __connection_retry_method(self):
         successful = False
