@@ -9,10 +9,9 @@ from connection import Connection
 from settings import Settings
 
 
-class BuddyClient(object):
+class Https(object):
     exception_name = u"exception"
     _result_name = u"result"
-    _hardware_info_file_name = "/proc/cpuinfo"
 
     def __init__(self, app_id, app_key):
         self._app_id = app_id
@@ -67,27 +66,30 @@ class BuddyClient(object):
 
         return self._settings.access_token_string
 
+    @property
+    def __hardware_info_file_name(self):
+        return "/proc/cpuinfo"
+
     def __register_device(self):
         response = self.__handle_dictionary_request(requests.post, "/devices", {
             "appId": self.app_id,
             "appKey": self.app_key,
-            "platform": BuddyClient.__get_platform(),
-            "model": BuddyClient.__get_model(),
-            "osVersion": BuddyClient.__get_os_version(),
+            "platform": Https.__get_platform(),
+            "model": self.__get_model(),
+            "osVersion": Https.__get_os_version(),
             "uniqueId": self.__get_unique_id(),
         })
 
-        if response[BuddyClient.exception_name] is None:
-            self._settings.set_device_token(response[BuddyClient._result_name])
+        if response[Https.exception_name] is None:
+            self._settings.set_device_token(response[Https._result_name])
 
     @staticmethod
     def __get_platform():
         return sys.platform
 
-    @staticmethod
-    def __get_model():
-        hardware = BuddyClient.__get_cpuinfo("Hardware")
-        revision = BuddyClient.__get_cpuinfo("Revision")
+    def __get_model(self):
+        hardware = self.__get_cpuinfo("Hardware")
+        revision = self.__get_cpuinfo("Revision")
         if hardware is None:
             return "Hardware info not available"
         else:
@@ -98,19 +100,18 @@ class BuddyClient(object):
         return platform.release()
 
     def __get_unique_id(self):
-        unique_id = BuddyClient.__get_cpuinfo("Serial")
+        unique_id = self.__get_cpuinfo("Serial")
         if unique_id is None:
             unique_id = uuid.getnode()
         return unique_id
 
-    @staticmethod
-    def __get_cpuinfo(key):
+    def __get_cpuinfo(self, key):
         try:
-            with open(BuddyClient._hardware_info_file_name, "r") as hardware_file:
+            with open(self.__hardware_info_file_name, "r") as hardware_file:
                 for line in hardware_file:
                     if line.startswith(key):
                         return line.splitlines()[0].split(": ")[1]
-        except:
+        except Exception as ex:
             return None
 
     def get(self, path, parameters):
@@ -140,8 +141,8 @@ class BuddyClient(object):
             "tag": tag
         })
 
-        if response[BuddyClient.exception_name] is None:
-            self._settings.set_user(response[BuddyClient._result_name])
+        if response[Https.exception_name] is None:
+            self._settings.set_user(response[Https._result_name])
 
         return response
 
@@ -151,8 +152,8 @@ class BuddyClient(object):
             "password": password,
         })
 
-        if response[BuddyClient.exception_name] is None:
-            self._settings.set_user(response[BuddyClient._result_name])
+        if response[Https.exception_name] is None:
+            self._settings.set_user(response[Https._result_name])
 
         return response
 
@@ -210,7 +211,7 @@ class BuddyClient(object):
     def __handle_exception(self, exception):
         self._service_exception.on_change(exception)
 
-        return {BuddyClient.exception_name: exception}
+        return {Https.exception_name: exception}
 
     def __handle_response(self, response):
         if response.status_code == 401 or response.status_code == 403:
@@ -223,7 +224,7 @@ class BuddyClient(object):
             response_dict = {"status": 500, "content": response.content}
             exception = requests.HTTPError()
 
-        response_dict[BuddyClient.exception_name] = exception
+        response_dict[Https.exception_name] = exception
 
         return response_dict
 

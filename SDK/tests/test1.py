@@ -1,13 +1,13 @@
 ﻿import unittest
 
-from buddy_client import BuddyClient
-from test_base import TestBase
+from https import Https
+from .test_base import TestBase
 
 
 class Test1(TestBase):
 
-    def test_BuddyClient(self):
-        client = BuddyClient(TestBase.US_app_id, TestBase.US_app_key)
+    def test_Https(self):
+        client = Https(TestBase.US_app_id, TestBase.US_app_key)
         self.assertIsNotNone(client)
         self.assertIs(client.app_id, TestBase.US_app_id)
         self.assertIs(client.app_key, TestBase.US_app_key)

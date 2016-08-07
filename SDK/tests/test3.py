@@ -2,9 +2,8 @@
 import unittest
 
 from access_token import AccessToken
-from buddy_client import BuddyClient
 from settings import Settings
-from test_base import TestBase
+from .test_base import TestBase
 
 
 class Test3(TestBase):

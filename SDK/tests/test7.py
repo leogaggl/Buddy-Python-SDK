@@ -4,12 +4,12 @@ import unittest
 
 import buddy
 from settings import Settings
-from test_base import TestBase
+from .test_base import TestBase
 
 
 class Test7(TestBase):
 
-    @mock.patch('buddy_client.Settings')
+    @mock.patch('https.Settings')
     def test_create_user(self, settings_mock):
         settings_mock.return_value = Settings(TestBase.US_app_id)
 
@@ -33,7 +33,7 @@ class Test7(TestBase):
 
         self.assertEqual(buddy.current_user_id, user_response["result"]["id"])
 
-    @mock.patch('buddy_client.Settings')
+    @mock.patch('https.Settings')
     def test_create_logout_login_user(self, settings_mock):
         settings_mock.return_value = Settings(TestBase.US_app_id)
 
@@ -76,7 +76,7 @@ class Test7(TestBase):
         self.assertIsNotNone(response)
         self.assertIsNotNone(response["result"]["signedUrl"])
 
-    @mock.patch('buddy_client.Settings')
+    @mock.patch('https.Settings')
     def test_auth_error(self, settings_mock):
         settings_mock.return_value = Settings(TestBase.US_app_id)
         self.setup_with_bad_tokens(settings_mock.return_value)

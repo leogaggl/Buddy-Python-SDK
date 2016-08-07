@@ -1,6 +1,6 @@
 ﻿import mprop
 
-from buddy_client import BuddyClient
+from https import Https
 
 
 __clients = {}
@@ -48,7 +48,7 @@ def init(module, app_id, app_key, instance_name=None):
     index = app_id if instance_name is None else app_id + instance_name
 
     if __clients.get(index) is None:
-        __current_client = BuddyClient(app_id, app_key)
+        __current_client = Https(app_id, app_key)
         __clients[index] = __current_client
     else:
         __current_client = __clients.get(index)
