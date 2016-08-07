@@ -44,7 +44,7 @@ class TestBase(TestCase):
         return self.__javascript_access_token_expires_string(utc_now_plus_days)
 
     def __javascript_access_token_expires_string(self, python_datetime):
-        return "/Date(" + str(self.ticks_from_datetime(python_datetime)) + ")/"
+        return "/Date({0:.0f})/".format(self.ticks_from_datetime(python_datetime))
 
     def ticks_from_datetime(self, python_datetime):
         return self.__ticks_from_timestamp(self.__total_seconds_from_datetime(python_datetime))
@@ -54,7 +54,7 @@ class TestBase(TestCase):
                 / timedelta(seconds=1).total_seconds()
 
     def __ticks_from_timestamp(self, timestamp):
-        return round(timestamp * 1000).as_integer_ratio()[0]
+        return round(timestamp * 1000)
 
     def create_test_user(self, user_name=None):
         return buddy.create_user(self.get_test_user_name() if user_name is None else user_name,
