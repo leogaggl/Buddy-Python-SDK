@@ -1,34 +1,33 @@
 ﻿import mock
-import unittest
 
 import buddy
 from https import Https
 from settings import Settings
-from .test_base import TestBase
+from test_base import TestBase
 
 
 class Test4(TestBase):
 
     @mock.patch("https.Settings")
     def test_register_device_us(self, settings_mock):
-        settings_mock.return_value = Settings(TestBase.US_app_id)
+        settings_mock.return_value = Settings(TestBase.US_app_id, TestBase.US_app_key)
         self.setup_with_bad_tokens(settings_mock.return_value)
 
         self._register_device(self, TestBase.US_app_id, TestBase.US_app_key, "https://api")
 
     @mock.patch("https.Settings")
     def test_register_device_eu(self, settings_mock):
-        settings_mock.return_value = Settings(TestBase.EU_app_id)
+        settings_mock.return_value = Settings(TestBase.EU_app_id, TestBase.EU_app_key)
         self.setup_with_bad_tokens(settings_mock.return_value)
 
         self._register_device(self, TestBase.EU_app_id, TestBase.EU_app_key, "https://api-eu")
 
     def _register_device(self, test, app_id, app_key, service_root_starts_with):
-        client = buddy.init(app_id, app_key, service_root_starts_with)
+        client = buddy.init_https(app_id, app_key)
 
         access_token_string = client.get_access_token_string()
 
-        settings = Settings(app_id)
+        settings = Settings(app_id, app_key)
         test.assertEqual(access_token_string, settings.access_token_string)
         test.assertTrue(settings.service_root.startswith(service_root_starts_with))
 
@@ -40,7 +39,7 @@ class Test4(TestBase):
         # TODO: to run in Python Tools for VS, change to "tests\cpuinfo"
         hardware_info_file_name_mock.return_value = "cpuinfo"
 
-        client = buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_hardware_info")
+        client = buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
 
         client.get_access_token_string()
 

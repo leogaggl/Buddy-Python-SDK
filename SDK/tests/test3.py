@@ -1,20 +1,18 @@
-﻿import uuid
-import unittest
-
-from access_token import AccessToken
+﻿from access_token import AccessToken
 from settings import Settings
-from .test_base import TestBase
+from test_base import TestBase
 
 
 class Test3(TestBase):
 
-    _app_id = "a"
+    _app_id = "ai"
+    _app_key = "ak"
     _default_service_root = "https://api.buddyplatform.com"
     _service_root = "sr"
     _access_token = "at"
 
     def test_Settings_empty(self):
-        settings = Settings(Test3._app_id)
+        settings = Settings(Test3._app_id, Test3._app_key)
         at = settings.access_token_string
         self.assertEqual(at, None)
         self.assertEqual(settings.service_root, Test3._default_service_root)
@@ -33,7 +31,7 @@ class Test3(TestBase):
         return at
 
     def test_Settings_access_token(self):
-        settings = Settings(Test3._app_id)
+        settings = Settings(Test3._app_id, Test3._app_key)
 
         json = {"accessToken": Test3._access_token,
                 "accessTokenExpires": self.future_javascript_access_token_expires(),
@@ -44,7 +42,7 @@ class Test3(TestBase):
         self.assertEqual(settings.access_token_string, Test3._access_token)
 
     def test_Settings_access_token_expired(self):
-        settings = Settings(Test3._app_id)
+        settings = Settings(Test3._app_id, Test3._app_key)
 
         json = {"accessToken": Test3._access_token,
                 "accessTokenExpires": self.past_javascript_access_token_expires(),
@@ -59,7 +57,7 @@ class Test3(TestBase):
         # pre-load Settings with a different test
         self.test_Settings_access_token()
 
-        settings = Settings(Test3._app_id)
+        settings = Settings(Test3._app_id, Test3._app_key)
 
         self.assertEqual(settings.access_token_string, Test3._access_token)
         self.assertEqual(settings.service_root, Test3._service_root)

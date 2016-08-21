@@ -3,19 +3,19 @@ from datetime import timedelta
 from dateutil.tz import tzutc
 import os
 from uuid import uuid4
-from unittest import TestCase
+import unittest
 
 import buddy
 from settings import Settings
 
 
-class TestBase(TestCase):
+class TestBase(unittest.TestCase):
 
     # TODO: Go to http://buddyplatform.com to get an app ID and app keys for US and EU apps.
-    US_app_id = "<Your US App ID>"
-    US_app_key = "<Your US App Key>"
-    EU_app_id = "<Your EU App ID>"
-    EU_app_key = "<Your EU App Key>"
+    US_app_id = "bbbbbc.xgjbvPdwkllw"
+    US_app_key = "1E9E824E-A3F1-4F34-B4F4-9CC87471A564"
+    EU_app_id = "bbbbbc.gfnGlNfJFvFP"
+    EU_app_key = "76123a72-4d05-93db-f297-b8a7501fd2f7"
 
     def setUp(self):
         try:
@@ -57,7 +57,7 @@ class TestBase(TestCase):
         return round(timestamp * 1000)
 
     def create_test_user(self, user_name=None):
-        return buddy.create_user(self.get_test_user_name() if user_name is None else user_name,
+        return buddy.https.create_user(self.get_test_user_name() if user_name is None else user_name,
                                  self.get_test_user_password())
 
     def get_test_user_name(self):

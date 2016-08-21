@@ -3,6 +3,7 @@ import re
 import os
 
 from access_token import AccessToken
+from events import Events
 
 
 class Settings(object):
@@ -16,8 +17,10 @@ class Settings(object):
     _access_token_name_suffix = "_access_token"
     _access_token_expires_name_suffix = "_access_token_expires"
 
-    def __init__(self, app_id):
+    def __init__(self, app_id, app_key):
         self._app_id = app_id
+        self._app_key = app_key
+        self._last_location = None
 
         self._settings = configparser.ConfigParser()
         if os.path.isfile(Settings.buddy_cfg_name):
@@ -26,6 +29,22 @@ class Settings(object):
 
         if not self._settings.has_section(self._app_id):
             self._settings.add_section(self._app_id)
+
+    @property
+    def app_id(self):
+        return self._app_id
+
+    @property
+    def app_key(self):
+        return self._app_key
+
+    @property
+    def last_location(self):
+        return self._last_location
+
+    @last_location.setter
+    def last_location(self, value):
+        self._last_location = value
 
     @property
     def service_root(self):

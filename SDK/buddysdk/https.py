@@ -1,11 +1,11 @@
-﻿from events import Events
-import platform
+﻿import platform
 import requests
 import sys
 from threading import Thread
 import uuid
 
 from connection import Connection
+from buddy_events import BuddyEvents
 from settings import Settings
 
 
@@ -13,52 +13,27 @@ class Https(object):
     exception_name = u"exception"
     _result_name = u"result"
 
-    def __init__(self, app_id, app_key):
-        self._app_id = app_id
-        self._app_key = app_key
+    def __init__(self, events, settings):
+        self._events = events
+        self._settings = settings
 
-        self._settings = Settings(self._app_id)
         self._session = requests.Session()
-        self._session.auth = Auth(self, self._settings)
-        self._last_location = None
+        self._session.auth = Auth(self)
 
-        self._service_exception = Events()
-        self._authentication_needed = Events()
-        self._connection_changed = Events()
         self._connection_retry = Thread(target=self.__connection_retry_method)
         self._connection_level = Connection.on
 
-    @property
-    def app_id(self):
-        return self._app_id
+    @classmethod
+    def from_app_credentials(cls, app_id, app_key):
+        return cls(BuddyEvents(), Settings(app_id, app_key))
 
     @property
-    def app_key(self):
-        return self._app_key
+    def events(self):
+        return self._events
 
     @property
-    def last_location(self):
-        return self._last_location
-
-    @last_location.setter
-    def last_location(self, value):
-        self._last_location = value
-
-    @property
-    def current_user_id(self):
-        return self._settings.user_id
-
-    @property
-    def service_exception(self):
-        return self._service_exception
-
-    @property
-    def authentication_needed(self):
-        return self._authentication_needed
-
-    @property
-    def connection_changed(self):
-        return self._connection_changed
+    def settings(self):
+        return self._settings
 
     def get_access_token_string(self):
         if self._settings.access_token_string is None:
@@ -72,8 +47,8 @@ class Https(object):
 
     def __register_device(self):
         response = self.__handle_dictionary_request(requests.post, "/devices", {
-            "appId": self.app_id,
-            "appKey": self.app_key,
+            "appId": self._settings.app_id,
+            "appKey": self._settings.app_key,
             "platform": Https.__get_platform(),
             "model": self.__get_model(),
             "osVersion": Https.__get_os_version(),
@@ -146,6 +121,10 @@ class Https(object):
 
         return response
 
+    @property
+    def current_user_id(self):
+        return self._settings.user_id
+
     def login_user(self, user_name, password):
         response = self.__handle_dictionary_request(self._session.post, "/users/login", {
             "username": user_name,
@@ -172,22 +151,23 @@ class Https(object):
         self.__handle_last_location(dictionary)
 
         def closure(settings):
+            url = settings.service_root + path
             if file is None:
-                return verb(settings.service_root + path, json=dictionary)
+                return verb(url, json=dictionary)
             else:
-                return verb(settings.service_root + path, json=dictionary, files={"data": ("data",) + file})
+                return verb(url, json=dictionary, files={"data": ("data",) + file})
 
         return self.__handle_request(closure)
 
     def __handle_last_location(self, dictionary):
-        if self.last_location is not None and dictionary is not None:
-            dictionary["location"] = "%s, %s" % self.last_location
+        if self._settings.last_location is not None and dictionary is not None:
+            dictionary["location"] = "%s, %s" % self._settings.last_location
 
     def __handle_request(self, closure):
         response = None
 
         try:
-            response = closure(self._settings)
+            response = closure(self.settings)
         except requests.RequestException as exception:
             return self.__handle_connection_exception(exception)
         except Exception as exception:
@@ -199,23 +179,23 @@ class Https(object):
         self.__set_connection_level(Connection.off)
 
         if not self._connection_retry.isAlive():
-           self._connection_retry.start()
+            self._connection_retry.start()
 
         return self.__handle_exception(exception)
 
     def __set_connection_level(self, connection_level):
         if self._connection_level is not connection_level:
             self._connection_level = connection_level
-            self._connection_changed.on_change(self._connection_level)
+            self._events.connection_changed.on_change(self._connection_level)
 
     def __handle_exception(self, exception):
-        self._service_exception.on_change(exception)
+        self._events.service_exception.on_change(exception)
 
         return {Https.exception_name: exception}
 
     def __handle_response(self, response):
         if response.status_code == 401 or response.status_code == 403:
-            self._authentication_needed.on_change()
+            self._events.user_authentication_needed.on_change()
 
         if response.headers["Content-Type"] == "application/json":
             response_dict = response.json()
@@ -245,9 +225,8 @@ class Https(object):
 
 class Auth(requests.auth.AuthBase):
 
-    def __init__(self, client, settings):
+    def __init__(self, client):
         self._client = client
-        self._settings = settings
 
     def __call__(self, request):
         access_token = self._client.get_access_token_string()

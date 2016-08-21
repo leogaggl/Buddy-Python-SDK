@@ -1,91 +1,81 @@
 ﻿import mprop
 
+from buddy_events import BuddyEvents
 from https import Https
+from mqtt import Mqtt
+from settings import Settings
 
 
-__clients = {}
-__current_client = None
+__https_client = None
+__mqtt_client = None
+__settings = None
+__events = None
 
 
 @property
-def current_client(module):
-    return __current_client
+def https(module):
+    return __https_client
+
+
+@property
+def mqtt(module):
+    return __mqtt_client
+
+
+@property
+def app_id(module):
+    return __settings.app_id
 
 
 @property
 def current_user_id(module):
-    return __current_client.current_user_id
+    return __https_client.current_user_id
 
 
 @property
 def last_location(module):
-    return __current_client.last_location
+    return __settings.last_location
 
 
 @last_location.setter
 def last_location(module, value):
-    __current_client.last_location = value
+    __settings.last_location = value
 
 
 @property
 def service_exception(module):
-    return __current_client.service_exception
-
-
-@property
-def authentication_needed(module):
-    return __current_client.authentication_needed
+    return __events.service_exception
 
 
 @property
 def connection_changed(module):
-    return __current_client.connection_changed
+    return __events.connection_changed
 
 
-def init(module, app_id, app_key, instance_name=None):
-    global __clients, __current_client
-
-    index = app_id if instance_name is None else app_id + instance_name
-
-    if __clients.get(index) is None:
-        __current_client = Https(app_id, app_key)
-        __clients[index] = __current_client
-    else:
-        __current_client = __clients.get(index)
-
-    return __current_client
+@property
+def user_authentication_needed(module):
+    return __events.user_authentication_needed
 
 
-def delete(module, path, parameters=None):
-    return __current_client.delete(path, parameters)
+def init_https(module, app_id, app_key):
+    global __events, __https_client, __settings
+
+    __events = BuddyEvents()
+
+    __settings = Settings(app_id, app_key)
+
+    __https_client = Https(__events, __settings)
+
+    return __https_client
 
 
-def get(module, path, parameters=None):
-    return __current_client.get(path, parameters)
+def init_mqtt(module, app_id, app_key):
+    global __mqtt_client, __https_client
 
+    init_https(app_id, app_key)
 
-def patch(module, path, dictionary):
-    return __current_client.patch(path, dictionary)
+    __mqtt_client = Mqtt(__events, __settings, __https_client)
 
-
-def post(module, path, dictionary, file=None):
-    return __current_client.post(path, dictionary, file)
-
-
-def put(module, path, dictionary):
-    return __current_client.put(path, dictionary)
-
-
-def create_user(module, user_name, password, first_name=None, last_name=None, email=None, gender=None, date_of_birth=None, tag=None):
-    return __current_client.create_user(user_name, password, first_name, last_name, email, gender, date_of_birth, tag)
-
-
-def login_user(module, user_name, password):
-    return __current_client.login_user(user_name, password)
-
-
-def logout_user(module):
-    __current_client.logout_user()
-
+    return __mqtt_client
 
 mprop.init()

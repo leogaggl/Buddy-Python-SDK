@@ -1,27 +1,26 @@
 ﻿import logging
-import unittest
 
 import buddy
-from .test_base import TestBase
+from test_base import TestBase
 
 
 class Test5(TestBase):
     def test_put_metrics(self):
-        buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_put_metrics")
+        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
 
-        response = buddy.post("/metrics/events/key", {})
+        response = buddy.https.post("/metrics/events/key", {})
 
         self.assertIsNotNone(response)
 
     # TODO: run with network off, switch logic in assertion
     def test_service_exception(self):
-        buddy.init(TestBase.US_app_id, TestBase.US_app_key, "test_service_exception")
+        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
 
         logger = ExceptionLogger()
 
         buddy.service_exception.on_change += logger.log
 
-        response = buddy.post("/metrics/events/key", {})
+        response = buddy.https.post("/metrics/events/key", {})
         self.assertIsNone(response["exception"])
 
 
