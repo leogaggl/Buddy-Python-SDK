@@ -12,8 +12,8 @@ from settings import Settings
 class TestBase(unittest.TestCase):
 
     # TODO: Go to http://buddyplatform.com to get an app ID and app keys for US and EU apps.
-    US_app_id = "bbbbbc.xgjbvPdwkllw"
-    US_app_key = "1E9E824E-A3F1-4F34-B4F4-9CC87471A564"
+    US_app_id = "bbbbbc.MMcgHkKJlFvnc"
+    US_app_key = "c840f56d-8e73-b94d-150c-4888862ce362"
     EU_app_id = "bbbbbc.gfnGlNfJFvFP"
     EU_app_key = "76123a72-4d05-93db-f297-b8a7501fd2f7"
 

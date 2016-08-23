@@ -2,7 +2,7 @@
 
 from buddy_events import BuddyEvents
 from https import Https
-from mqtt import Mqtt
+from mqtt import Mqtt, MqttEvents
 from settings import Settings
 
 
@@ -10,6 +10,7 @@ __https_client = None
 __mqtt_client = None
 __settings = None
 __events = None
+__mqtt_events = None
 
 
 @property
@@ -57,6 +58,16 @@ def user_authentication_needed(module):
     return __events.user_authentication_needed
 
 
+@property
+def connection_changed(module):
+    return __events.connection_changed
+
+
+@property
+def user_authentication_needed(module):
+    return __events.user_authentication_needed
+
+
 def init_https(module, app_id, app_key):
     global __events, __https_client, __settings
 
@@ -72,9 +83,11 @@ def init_https(module, app_id, app_key):
 def init_mqtt(module, app_id, app_key):
     global __mqtt_client, __https_client
 
-    init_https(app_id, app_key)
+    module.init_https(app_id, app_key)
 
-    __mqtt_client = Mqtt(__events, __settings, __https_client)
+    __mqtt_client = MqttEvents()
+
+    __mqtt_client = Mqtt(__events, __mqtt_client, __settings, __https_client)
 
     return __mqtt_client
 
