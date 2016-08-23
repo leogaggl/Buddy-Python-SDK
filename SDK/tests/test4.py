@@ -23,7 +23,7 @@ class Test4(TestBase):
         self._register_device(self, TestBase.EU_app_id, TestBase.EU_app_key, "https://api-eu")
 
     def _register_device(self, test, app_id, app_key, service_root_starts_with):
-        client = buddy.init_https(app_id, app_key)
+        client = buddy.https(app_id, app_key)
 
         access_token_string = client.get_access_token_string()
 
@@ -39,7 +39,7 @@ class Test4(TestBase):
         # TODO: to run in Python Tools for VS, change to "tests\cpuinfo"
         hardware_info_file_name_mock.return_value = "cpuinfo"
 
-        client = buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        client = buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         client.get_access_token_string()
 

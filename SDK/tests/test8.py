@@ -8,14 +8,14 @@ from test_base import TestBase
 class Test8(TestBase):
 
     def test_connect(self):
-        buddy.init_mqtt(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.mqtt(TestBase.US_app_id, TestBase.US_app_key)
 
         client = buddy.mqtt.connect()
 
         self.assertIsNotNone(client)
 
     def test_connect_2(self):
-        buddy.init_mqtt(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.mqtt(TestBase.US_app_id, TestBase.US_app_key)
 
         client = buddy.mqtt.connect()
 

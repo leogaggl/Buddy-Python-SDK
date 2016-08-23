@@ -11,7 +11,7 @@ class Test6(TestBase):
 
     # TODO: run with network off and a breakpoint at time.sleep
     def test_connection(self):
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         logger = ConnectionLogger()
 
@@ -27,7 +27,7 @@ class Test6(TestBase):
         settings.set_device_token({"accessToken": "bad device token",
                                    "accessTokenExpires": self.future_javascript_access_token_expires()})
 
-        client = buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        client = buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         buddy.https.post("/metrics/events/key", {})
 
@@ -38,7 +38,7 @@ class Test6(TestBase):
         settings.set_device_token({"accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIyMDE1LTExLTExVDAzOjM0OjU4LjE2Mjg2NzlaIiwibCI6ImJiYmJ2LnJwZGJ2eGJnR3JNZyIsImEiOiJiYmJiYmMueGdqYnZQZHdrbGx3IiwidSI6bnVsbCwiZCI6ImJsai5sRHBGd0tNc2dGRk0ifQ.l4ob5liSYfgI25mnysjRHpgCYr1yCzayC4XjHJOv4v0",
                                    "accessTokenExpires": self.past_javascript_access_token_expires()})
 
-        client = buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        client = buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         buddy.https.post("/metrics/events/key", {})
 

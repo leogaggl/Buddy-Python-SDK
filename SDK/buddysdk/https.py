@@ -7,6 +7,7 @@ import uuid
 from connection import Connection
 from buddy_events import BuddyEvents
 from settings import Settings
+import buddy
 
 
 class Https(object):
@@ -24,8 +25,14 @@ class Https(object):
         self._connection_level = Connection.on
 
     @classmethod
-    def from_app_credentials(cls, app_id, app_key):
-        return cls(BuddyEvents(), Settings(app_id, app_key))
+    def init(cls, app_id, app_key):
+        buddy.events = BuddyEvents()
+
+        buddy.settings = Settings(app_id, app_key)
+
+        buddy.https_client = cls(buddy.events, buddy.settings)
+
+        return buddy.https_client
 
     @property
     def events(self):

@@ -6,7 +6,7 @@ from test_base import TestBase
 
 class Test5(TestBase):
     def test_put_metrics(self):
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         response = buddy.https.post("/metrics/events/key", {})
 
@@ -14,7 +14,7 @@ class Test5(TestBase):
 
     # TODO: run with network off, switch logic in assertion
     def test_service_exception(self):
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         logger = ExceptionLogger()
 

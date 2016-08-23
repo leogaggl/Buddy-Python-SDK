@@ -8,13 +8,13 @@ from test_base import TestBase
 
 class Test7(TestBase):
 
-    @mock.patch('buddy.Settings')
+    @mock.patch('https.Settings')
     def test_create_user(self, settings_mock):
         settings_mock.return_value = Settings(TestBase.US_app_id, TestBase.US_app_key)
 
         self.setup_with_bad_tokens(settings_mock.return_value)
 
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         users = buddy.https.get("/users", {})
         self.assertIsNotNone(users)
@@ -32,13 +32,13 @@ class Test7(TestBase):
 
         self.assertEqual(buddy.current_user_id, user_response["result"]["id"])
 
-    @mock.patch('buddy.Settings')
+    @mock.patch('https.Settings')
     def test_create_logout_login_user(self, settings_mock):
         settings_mock.return_value = Settings(TestBase.US_app_id, TestBase.US_app_key)
 
         self.setup_with_bad_tokens(settings_mock.return_value)
 
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         users_response = buddy.https.get("/users", {})
         self.assertIsNotNone(users_response)
@@ -68,7 +68,7 @@ class Test7(TestBase):
         self.assertEqual(buddy.current_user_id, user2_response["result"]["id"])
 
     def test_upload_pic(self):
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         self.create_test_user()
 
@@ -82,14 +82,14 @@ class Test7(TestBase):
         settings_mock.return_value = Settings(TestBase.US_app_id, TestBase.US_app_key)
         self.setup_with_bad_tokens(settings_mock.return_value)
 
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key,)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key,)
 
         response = buddy.https.get("/pictures", {})
         self.assertIsNotNone(response)
         self.assertEqual(response["status"], 403)
 
     def test_auth(self):
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         logger = AuthLogger()
 
@@ -106,7 +106,7 @@ class Test7(TestBase):
             time.sleep(2)
 
     def test_last_location(self):
-        buddy.init_https(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
         self.create_test_user()
 

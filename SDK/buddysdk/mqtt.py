@@ -6,13 +6,14 @@ import events
 import requests
 import sys
 from threading import Thread
+from urlparse import urlparse
 import uuid
 
-from buddy_events import BuddyEvents
-from connection import Connection
-from https import Https
+import buddy
 from settings import Settings
-from urlparse import urlparse
+from buddy_events import BuddyEvents
+from https import Https
+
 
 class RootLevels(Enum):
     cmd = "cmd"
@@ -68,6 +69,20 @@ class Mqtt(object):
         self._https = https
         self._settings = settings
         self._client = None
+
+    @classmethod
+    def init(cls, app_id, app_key):
+        buddy.events = BuddyEvents()
+
+        buddy.settings = Settings(app_id, app_key)
+
+        buddy.https_client = Https(buddy.events, buddy.settings)
+
+        buddy.mqtt_client = MqttEvents()
+
+        buddy.mqtt_client = cls(buddy.events, buddy.mqtt_client, buddy.settings, buddy.https_client)
+
+        return buddy.mqtt_client
 
     def __on_disconnect(self, client, userdata, rc):
         self._events.connection_changed.on_change(userdata, rc)

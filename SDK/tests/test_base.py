@@ -21,7 +21,15 @@ class TestBase(unittest.TestCase):
         try:
             os.remove(Settings.buddy_cfg_name)
         finally:
+            self.reset_module()
             return
+
+    def reset_module(self):
+        buddy.https_client = None
+        buddy.mqtt_client = None
+        buddy.settings = None
+        buddy.events = None
+        buddy.mqtt_events = None
 
     def setup_with_bad_tokens(self, settings):
         settings.set_device_token({"accessToken": "bad device token",
