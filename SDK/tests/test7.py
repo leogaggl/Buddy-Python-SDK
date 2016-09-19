@@ -1,5 +1,6 @@
 import mock
 import time
+import unittest
 
 import buddy
 from settings import Settings
@@ -131,6 +132,7 @@ class AuthLogger(object):
 
     def log(self):
         self.authorized = True
+
 
 if __name__ == '__main__':
     unittest.main()

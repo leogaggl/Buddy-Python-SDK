@@ -1,4 +1,6 @@
-﻿from access_token import AccessToken
+﻿import unittest
+
+from access_token import AccessToken
 from settings import Settings
 from test_base import TestBase
 

@@ -1,15 +1,20 @@
-﻿import buddy
+﻿import unittest
+
+import buddy
 from test_base import TestBase
 
 
 class Test2(TestBase):
     def test_buddy_init(self):
-        client = buddy.https("a", "b")
-        self.assertEqual(buddy.app_id, "a")
-        self.assertEqual(buddy.https, client)
+        buddy.init("ai", "ak")
+        self.assertEqual(buddy.app_id, "ai")
+        self.assertEqual(buddy.https_client.settings.app_id, "ai")
+        self.assertEqual(buddy.https_client.settings.app_key, "ak")
 
-    def test_buddy_init_multiple(self):
-        buddy.https("ai", "ak")
+    def test_buddy_https_init(self):
+        client = buddy.https("ai", "ak")
+        self.assertEqual(buddy.app_id, "ai")
+        self.assertEqual(buddy.https, client)
         self.assertEqual(buddy.https_client.settings.app_id, "ai")
         self.assertEqual(buddy.https_client.settings.app_key, "ak")
 

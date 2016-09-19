@@ -1,24 +1,18 @@
 import paho.mqtt.client as mqtt
-import paho.mqtt.publish
-import paho.mqtt.subscribe
-from enum import Enum
-import events
-import requests
-import sys
-from threading import Thread
+from flufl.enum import Enum
+import events as events_package
 from urlparse import urlparse
-import uuid
 
 import buddy
 from settings import Settings
 from buddy_events import BuddyEvents
-from https import Https
+import https
 
 
 class RootLevels(Enum):
-    cmd = "cmd"
-    status = "status"
-    telemetry = "telemetry"
+    cmd = 1
+    status = 2
+    telemetry = 3
 
 
 class Topic(object):
@@ -27,11 +21,32 @@ class Topic(object):
         self._root_level = root_level
         self._levels = levels
 
+    def __repr__(self):
+        return self._root_level.name + "/" + str.join("/", self._levels)
+
     @classmethod
-    def from_string(cls, levels):
-        obj = cls()
-        obj._levels = levels
-        return obj
+    def create(cls, root_level, levels=None):
+        parsed_root_level = None
+        parsed_levels = None;
+
+        if isinstance(root_level, basestring):
+            split_levels = root_level.split("/")
+
+            parsed_root_level = [[rl.name is l for rl in iter(RootLevels)] for l in split_levels]
+        else:
+            if root_level in list(RootLevels):
+                parsed_root_level = root_level
+
+        if isinstance(levels, basestring):
+            parsed_levels = levels.split("/")
+        else:
+            if isinstance(levels, list):
+                parsed_levels = levels
+
+        if parsed_root_level is None or parsed_levels is None:
+            return None
+        else:
+            return cls(parsed_root_level, parsed_levels)
 
     @property
     def root_level(self):
@@ -50,8 +65,8 @@ class Qos(Enum):
 class MqttEvents(object):
 
     def __init__(self):
-        self._published = events.Events()
-        self._publish_received = events.Events()
+        self._published = events_package.Events()
+        self._publish_received = events_package.Events()
 
     @property
     def published(self):
@@ -76,7 +91,7 @@ class Mqtt(object):
 
         buddy.settings = Settings(app_id, app_key)
 
-        buddy.https_client = Https(buddy.events, buddy.settings)
+        buddy.https_client = https.Https(buddy.events, buddy.settings)
 
         buddy.mqtt_client = MqttEvents()
 
@@ -93,17 +108,25 @@ class Mqtt(object):
     def __on_publish(self, client, userdata, mid):
         self._mqtt_events.published.on_change(userdata, mid)
 
+    def __on_debug_connect(self, client, userdata, flags, rc):
+        print(userdata)
+
+    def __on_debug_log(self, client, userdata, level, buf):
+        print(buf)
+
     def connect(self):
         access_token = self._https.get_access_token_string()
 
         if access_token is None or access_token is "":
             self._events.service_exception.on_change()
         else:
-            self._client = mqtt.Client(access_token)
+            self._client = mqtt.Client(client_id=access_token)
 
             self._client.on_disconnect = self.__on_disconnect
             self._client.on_message = self.__on_message
             self._client.on_publish = self.__on_publish
+            self._client.on_connect = self.__on_debug_connect
+            self._client.on_log = self.__on_debug_log
 
             try:
                 # TODO: remove when TLS is working for MQTT
@@ -112,6 +135,10 @@ class Mqtt(object):
                 self._client.connect(self.url, 1883)
 
                 self._client.loop_start()
+
+                global_topic = Topic.create(RootLevels.cmd, "#")
+                self._client.subscribe(str(global_topic))
+
             except BaseException as ex:
                 self._events.service_exception.on_change(ex)
             else:

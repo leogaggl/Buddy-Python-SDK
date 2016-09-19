@@ -1,4 +1,4 @@
-from enum import Enum
+from flufl.enum import Enum
 
 
 class Connection(Enum):

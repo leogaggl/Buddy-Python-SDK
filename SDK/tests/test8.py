@@ -1,5 +1,5 @@
-import mock
 import time
+import unittest
 
 import buddy
 from test_base import TestBase
@@ -8,13 +8,14 @@ from test_base import TestBase
 class Test8(TestBase):
 
     def test_connect(self):
-        buddy.mqtt(TestBase.US_app_id, TestBase.US_app_key)
+        buddy.init(TestBase.US_app_id, TestBase.US_app_key)
 
         client = buddy.mqtt.connect()
 
         self.assertIsNotNone(client)
 
-    def test_connect_2(self):
+    @unittest.skip("Command must be sent to the server manually")
+    def test_publish_received(self):
         buddy.mqtt(TestBase.US_app_id, TestBase.US_app_key)
 
         client = buddy.mqtt.connect()
@@ -33,5 +34,10 @@ class PublishReceivedLogger(object):
     def __init__(self):
         self.publish_received = False
 
-    def log(self, client, userdata, msg):
+    def log(self, userdata, msg):
+        print(msg)
         self.publish_received = True
+
+
+if __name__ == '__main__':
+    unittest.main()

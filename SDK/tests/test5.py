@@ -1,4 +1,5 @@
 ﻿import logging
+import unittest
 
 import buddy
 from test_base import TestBase
@@ -12,7 +13,7 @@ class Test5(TestBase):
 
         self.assertIsNotNone(response)
 
-    # TODO: run with network off, switch logic in assertion
+    # When debugging run with network off, switch logic in assertion
     def test_service_exception(self):
         buddy.https(TestBase.US_app_id, TestBase.US_app_key)
 
