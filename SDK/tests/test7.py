@@ -103,7 +103,7 @@ class Test7(TestBase):
         response = buddy.https.get("/pictures", {})
         self.assertIsNotNone(response)
 
-        while logger.authorized is not True:
+        while logger.authorize_needed is not True:
             time.sleep(2)
 
     def test_last_location(self):
@@ -128,10 +128,10 @@ class Test7(TestBase):
 
 class AuthLogger(object):
     def __init__(self):
-        self.authorized = False
+        self.authorize_needed = False
 
     def log(self):
-        self.authorized = True
+        self.authorize_needed = True
 
 
 if __name__ == '__main__':

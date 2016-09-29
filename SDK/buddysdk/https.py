@@ -1,7 +1,8 @@
 ﻿import platform
 import requests
 import sys
-from threading import Thread
+import threading
+import time
 import uuid
 
 from connection import Connection
@@ -12,7 +13,8 @@ import buddy
 
 class Https(object):
     exception_name = u"exception"
-    _result_name = u"result"
+    status_name = u"status"
+    result_name = u"result"
 
     def __init__(self, events, settings):
         self._events = events
@@ -21,7 +23,7 @@ class Https(object):
         self._session = requests.Session()
         self._session.auth = Auth(self)
 
-        self._connection_retry = Thread(target=self.__connection_retry_method)
+        self._connection_retry = None
         self._connection_level = Connection.on
 
     @classmethod
@@ -62,8 +64,8 @@ class Https(object):
             "uniqueId": self.__get_unique_id(),
         })
 
-        if response[Https.exception_name] is None:
-            self._settings.set_device_token(response[Https._result_name])
+        if Https.exception_name not in response:
+            self._settings.set_device_token(response[Https.result_name])
 
     @staticmethod
     def __get_platform():
@@ -93,7 +95,7 @@ class Https(object):
                 for line in hardware_file:
                     if line.startswith(key):
                         return line.splitlines()[0].split(": ")[1]
-        except Exception as ex:
+        except:
             return None
 
     def get(self, path, parameters):
@@ -123,8 +125,8 @@ class Https(object):
             "tag": tag
         })
 
-        if response[Https.exception_name] is None:
-            self._settings.set_user(response[Https._result_name])
+        if Https.exception_name not in response:
+            self._settings.set_user(response[Https.result_name])
 
         return response
 
@@ -138,8 +140,8 @@ class Https(object):
             "password": password,
         })
 
-        if response[Https.exception_name] is None:
-            self._settings.set_user(response[Https._result_name])
+        if Https.exception_name not in response:
+            self._settings.set_user(response[Https.result_name])
 
         return response
 
@@ -171,11 +173,33 @@ class Https(object):
             dictionary["location"] = "%s, %s" % self._settings.last_location
 
     def __handle_request(self, closure):
+        if sys.version_info.major < 3:
+            return self.__handle_request_2(closure)
+        else:
+            return self.__handle_request_3(closure)
+
+    def __handle_request_2(self, closure):
         response = None
 
         try:
             response = closure(self.settings)
         except requests.RequestException as exception:
+            return self.__handle_connection_exception(exception)
+        except OSError as exception:
+            return self.__handle_connection_exception(exception)
+        except Exception as exception:
+            return self.__handle_exception(exception)
+        else:
+            return self.__handle_response(response)
+
+    def __handle_request_3(self, closure):
+        response = None
+
+        try:
+            response = closure(self.settings)
+        except requests.RequestException as exception:
+            return self.__handle_connection_exception(exception)
+        except ConnectionError as exception:
             return self.__handle_connection_exception(exception)
         except Exception as exception:
             return self.__handle_exception(exception)
@@ -185,7 +209,8 @@ class Https(object):
     def __handle_connection_exception(self, exception):
         self.__set_connection_level(Connection.off)
 
-        if not self._connection_retry.isAlive():
+        if self._connection_retry is None:
+            self._connection_retry = threading.Thread(target=self.__connection_retry_method, args=(self._settings.service_root, self.__reset_retry))
             self._connection_retry.start()
 
         return self.__handle_exception(exception)
@@ -201,33 +226,35 @@ class Https(object):
         return {Https.exception_name: exception}
 
     def __handle_response(self, response):
+        # TODO: verify 401 response_dict
         if response.status_code == 401 or response.status_code == 403:
             self._events.user_authentication_needed.on_change()
 
-        if response.headers["Content-Type"] == "application/json":
+        if "Content-Type" in response.headers and response.headers["Content-Type"] == "application/json":
             response_dict = response.json()
-            exception = None
         else:
-            response_dict = {"status": 500, "content": response.content}
-            exception = requests.HTTPError()
-
-        response_dict[Https.exception_name] = exception
+            response_dict = {"status": 500, "content": response.content, Https.exception_name: requests.HTTPError()}
 
         return response_dict
 
-    def __connection_retry_method(self):
+    def __reset_retry(self):
+        self.__set_connection_level(Connection.on)
+        self._connection_retry = None
+
+    def __connection_retry_method(self, service_root, reset_retry):
         successful = False
 
         try:
             while not successful:
+                time.sleep(1)
                 try:
-                    requests.get(self._settings.service_root + "/service/ping")
+                    requests.get(service_root + "/service/ping")
                 except requests.RequestException:
                     successful = False
                 else:
                     successful = True
         finally:
-            self.__set_connection_level(Connection.on)
+            reset_retry()
 
 
 class Auth(requests.auth.AuthBase):

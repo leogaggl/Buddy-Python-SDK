@@ -18,10 +18,11 @@ class Test6(TestBase):
 
         buddy.connection_changed.on_change += logger.log
 
-        buddy.https.post("/metrics/events/key", {})
-
         while logger.connection is not Connection.on:
-            time.sleep(2)
+            print ("post")
+            print(str(buddy.https.post("/metrics/events/key", {})))
+            print ("sleep")
+            time.sleep(10)
 
     def test_bad_device_token(self):
         settings = Settings(TestBase.US_app_id, TestBase.US_app_key)
@@ -48,10 +49,11 @@ class Test6(TestBase):
 
 class ConnectionLogger(object):
     def __init__(self):
-        self.connection = Connection.on # When debugging test_connection switch to None
+        print("connection_changed.log start")
+        self.connection = Connection.on  # When debugging test_connection switch to None
 
     def log(self, connection):
-        logging.info("connection_changed.log: " + str(connection.value))
+        print("connection_changed.log: " + str(connection.value))
         self.connection = connection
 
 

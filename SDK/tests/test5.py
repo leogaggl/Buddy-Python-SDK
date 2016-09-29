@@ -2,6 +2,7 @@
 import unittest
 
 import buddy
+from https import Https
 from test_base import TestBase
 
 
@@ -22,7 +23,7 @@ class Test5(TestBase):
         buddy.service_exception.on_change += logger.log
 
         response = buddy.https.post("/metrics/events/key", {})
-        self.assertIsNone(response["exception"])
+        self.assertFalse(Https.exception_name in response)
 
 
 class ExceptionLogger(object):
