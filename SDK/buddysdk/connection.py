@@ -1,4 +1,8 @@
-from flufl.enum import Enum
+import sys
+if sys.version_info.major < 3:
+    from flufl.enum import Enum
+else:
+    from enum import Enum
 
 
 class Connection(Enum):

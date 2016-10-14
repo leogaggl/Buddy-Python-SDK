@@ -226,7 +226,7 @@ class Https(object):
         return {Https.exception_name: exception}
 
     def __handle_response(self, response):
-        # TODO: verify 401 response_dict
+
         if response.status_code == 401 or response.status_code == 403:
             self._events.user_authentication_needed.on_change()
 

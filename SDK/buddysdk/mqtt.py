@@ -1,7 +1,16 @@
-import paho.mqtt.client as mqtt
-from flufl.enum import Enum
+import sys
+import base64
+if sys.version_info.major < 3:
+    from flufl.enum import IntEnum
+else:
+    from enum import IntEnum
+    basestring = str
 import events as events_package
-from urlparse import urlparse
+import paho.mqtt.client as mqtt
+if sys.version_info.major < 3:
+    from urlparse import urlparse
+else:
+    from urllib.parse import urlparse
 
 import buddy
 from settings import Settings
@@ -9,7 +18,7 @@ from buddy_events import BuddyEvents
 import https
 
 
-class RootLevels(Enum):
+class RootLevels(IntEnum):
     cmd = 1
     status = 2
     telemetry = 3
@@ -57,8 +66,8 @@ class Topic(object):
         return self._levels
 
 
-class Qos(Enum):
-    at_most_once = 0,
+class Qos(IntEnum):
+    at_most_once = 0
     at_least_once = 1
 
 
@@ -129,10 +138,7 @@ class Mqtt(object):
             self._client.on_log = self.__on_debug_log
 
             try:
-                # TODO: remove when TLS is working for MQTT
-                self._client.tls_insecure_set(True)
-
-                self._client.connect(self.url, 1883)
+                self._client.connect("co-us.buddyplatform.com", 8883)
 
                 self._client.loop_start()
 
@@ -169,8 +175,13 @@ class Mqtt(object):
 
         self._client = None
 
-    def publish(self, topic, payload, qos=Qos.at_least_once):
+    def publish(self, topic, payload, qos=Qos.at_most_once):
         try:
-            self._client.publish(topic, payload, qos)
+            if topic.root_level is not RootLevels.telemetry:
+                payload = base64.standard_b64encode(payload.encode('ascii'))
+
+            result = self._client.publish(str(topic), payload, int(qos))
+            return result
         except BaseException as ex:
             self._events.service_exception.on_change(ex)
+            return ex
