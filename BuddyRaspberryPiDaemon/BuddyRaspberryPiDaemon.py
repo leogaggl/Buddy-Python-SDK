@@ -19,8 +19,8 @@ channel_list = [4]
 
 GPIO.setup(channel_list, GPIO.IN, GPIO.PUD_DOWN)
 
-sys.path.append("../Buddy Python SDK")
-sys.path.append("../Buddy Python SDK/buddysdk")
+sys.path.append("../SDK")
+sys.path.append("../SDK/buddysdk")
 
 from buddysdk import buddy
 
